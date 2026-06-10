@@ -24,11 +24,20 @@ export default function Hero() {
 
   return (
     <section className="hero-v2" ref={ref}>
-      {/* Animated, video-like background */}
+      {/* Video background */}
       <div className="hero-v2-bg" aria-hidden>
+        <video
+          className="hero-v2-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source src="/hero-bg.mp4" type="video/mp4" />
+        </video>
+        <div className="hero-v2-veil" />
         <span className="orb orb1" />
         <span className="orb orb2" />
-        <span className="orb orb3" />
         <span className="hero-v2-grid" />
       </div>
 

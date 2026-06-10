@@ -12,10 +12,9 @@ export default function Pitch() {
         <div className="reveal grid gap-8 py-16 md:grid-cols-[auto_1fr] md:gap-16">
           <span className="kicker mt-2">Philosophy</span>
           <p className="font-serif text-[28px] md:text-[42px] leading-[1.15] tracking-tight text-[color:var(--ink)]">
-            We build custom ERP, LMS, AI automation, data migration, web, app
-            and gaming solutions for businesses that need{" "}
+            Custom software for businesses that need{" "}
             <em className="italic text-[#7C3AED]">practical, scalable</em> technology
-            — without enterprise-level complexity.
+            — without the enterprise complexity.
           </p>
         </div>
 

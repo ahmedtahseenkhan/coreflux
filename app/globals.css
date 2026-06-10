@@ -269,14 +269,30 @@ button { font: inherit; cursor: pointer; }
 }
 .hero-v2-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
 
+/* Full-bleed video background */
+.hero-v2-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+/* Dark veil so copy stays readable over the footage */
+.hero-v2-veil {
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(8,4,15,0.55) 0%, rgba(8,4,15,0.35) 45%, rgba(8,4,15,0.85) 100%),
+    radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.28) 0%, transparent 60%);
+}
+
 /* Flowing gradient orbs = the "video" motion */
 .orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.75;
+  filter: blur(100px);
+  opacity: 0.4;
   mix-blend-mode: screen;
   will-change: transform;
+  z-index: 1;
 }
 .orb1 {
   width: 560px; height: 560px;

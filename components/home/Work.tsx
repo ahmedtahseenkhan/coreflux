@@ -21,7 +21,7 @@ export default function Work() {
             </h2>
           </div>
           <p>
-            Projects we're proud of. Built for businesses like yours, shipped with the rigor they demand.
+            Built for businesses like yours, shipped with real rigor.
           </p>
         </div>
 

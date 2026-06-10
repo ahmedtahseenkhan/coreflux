@@ -30,7 +30,7 @@ export default function Services() {
             </h2>
           </div>
           <p>
-            Each service is deeply specialized, but all share our commitment to practical, scalable, custom software that actually ships.
+            Deeply specialized lines, one promise — practical software that ships.
           </p>
         </div>
 

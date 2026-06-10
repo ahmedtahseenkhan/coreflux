@@ -50,7 +50,7 @@ export default function CTA() {
             </h3>
 
             <p className="mt-5 text-[16px] leading-relaxed max-w-[52ch] text-white/75">
-              Drop your email and a one-liner about the problem. We'll reply within one working day with next steps.
+              Drop your email and a line about the problem. We'll reply within one working day.
             </p>
 
             <form onSubmit={submit} className="mt-8 flex flex-col gap-0 sm:flex-row sm:items-stretch max-w-[600px]">

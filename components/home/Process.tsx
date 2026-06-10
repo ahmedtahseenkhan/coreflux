@@ -1,10 +1,10 @@
 import CountUp from "@/components/CountUp";
 
 const STEPS = [
-  { n: "01", t: "Discovery", b: "We map your workflow, understand your constraints, and sketch the system you actually need." },
-  { n: "02", t: "Build & iterate", b: "Rapid prototyping with real data. You shape the product every two weeks." },
-  { n: "03", t: "Ship", b: "Deploy to production with full ownership, docs, and a clear path forward." },
-  { n: "04", t: "Scale & maintain", b: "We stay in as long as you need. Ongoing optimization and new features without handoffs." },
+  { n: "01", t: "Discovery", b: "We map your workflow and sketch the system you actually need." },
+  { n: "02", t: "Build & iterate", b: "Rapid prototyping with real data. You shape it every two weeks." },
+  { n: "03", t: "Ship", b: "Deploy to production with full ownership and docs." },
+  { n: "04", t: "Scale & maintain", b: "Ongoing optimization and new features — no handoffs." },
 ];
 
 const COUNTERS = [
