@@ -7,7 +7,7 @@ import CTA from "@/components/home/CTA";
 export const metadata: Metadata = {
   title: "Case studies",
   description:
-    "Selected work from the team behind CoreFlux — ERP, LMS, AI, data migration, web and gaming systems built for real teams.",
+    "Selected work from the team behind Coreflux Solutions — ERP, LMS, AI, data migration, web and gaming systems built for real teams.",
 };
 
 type Status = "Live" | "In production" | "Coming soon";
@@ -115,7 +115,7 @@ export default function CaseStudiesPage() {
         }
         lede={
           <>
-            CoreFlux is a young brand, but the work behind it isn&rsquo;t.
+            Coreflux Solutions is a young brand, but the work behind it isn&rsquo;t.
             Here&rsquo;s a snapshot of recent builds across ERP, LMS, AI, data,
             web and gaming. Client names are kept private by default —
             we&rsquo;ll happily make warm intros on request.

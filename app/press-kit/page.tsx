@@ -5,11 +5,11 @@ import SectionHead from "@/components/SectionHead";
 
 export const metadata: Metadata = {
   title: "Press kit",
-  description: "CoreFlux brand assets, boilerplate and press contact.",
+  description: "Coreflux Solutions brand assets, boilerplate and press contact.",
 };
 
 const FACTS = [
-  { label: "Studio", value: "CoreFlux" },
+  { label: "Studio", value: "Coreflux Solutions" },
   { label: "Founded", value: "2025" },
   { label: "HQ", value: "Houston, TX" },
   { label: "Team", value: "Small, senior" },
@@ -18,10 +18,10 @@ const FACTS = [
 ];
 
 const ASSETS = [
-  { name: "Wordmark · Light", note: "SVG · 8KB · For light backgrounds", file: "/press/coreflux-wordmark-light.svg" },
-  { name: "Wordmark · Dark", note: "SVG · 8KB · For dark backgrounds", file: "/press/coreflux-wordmark-dark.svg" },
+  { name: "Wordmark · Light", note: "SVG · 8KB · For light backgrounds", file: "/press/corefluxsolutions-wordmark-light.svg" },
+  { name: "Wordmark · Dark", note: "SVG · 8KB · For dark backgrounds", file: "/press/corefluxsolutions-wordmark-dark.svg" },
   { name: "Brand colour", note: "Primary purple — #7C3AED", file: "#" },
-  { name: "Press one-pager", note: "PDF · Boilerplate + facts · ~80KB", file: "/press/coreflux-press.pdf" },
+  { name: "Press one-pager", note: "PDF · Boilerplate + facts · ~80KB", file: "/press/corefluxsolutions-press.pdf" },
 ];
 
 export default function PressKitPage() {
@@ -36,17 +36,17 @@ export default function PressKitPage() {
         title={<>Press, brand and the <em>boilerplate</em> bit.</>}
         lede={
           <>
-            Everything you need to write about CoreFlux accurately &mdash; the
+            Everything you need to write about Coreflux Solutions accurately &mdash; the
             short version, the long version, the visuals, and a real human you
             can email.
           </>
         }
         ctas={[
-          { href: "mailto:press@coreflux.studio?subject=Press%20enquiry", label: "Email press@coreflux.studio", primary: true },
+          { href: "mailto:press@corefluxsolutions.com?subject=Press%20enquiry", label: "Email press@corefluxsolutions.com", primary: true },
           { href: "#facts", label: "Quick facts" },
         ]}
         meta={[
-          { label: "Press contact", value: "press@coreflux.studio" },
+          { label: "Press contact", value: "press@corefluxsolutions.com" },
           { label: "Response", value: "< 1 business day" },
           { label: "Region", value: "US / global" },
           { label: "Last updated", value: "2026" },
@@ -93,7 +93,7 @@ export default function PressKitPage() {
           <div className="reveal">
             <span className="kicker">Boilerplate · Short</span>
             <p className="mt-4 font-serif text-[26px] leading-snug text-[color:var(--ink)] max-w-[42ch]">
-              CoreFlux is a Houston-based software studio building custom ERP,
+              Coreflux Solutions is a Houston-based software studio building custom ERP,
               LMS, AI automation, data migration, web, app and gaming solutions
               for businesses that need practical, scalable technology &mdash;
               without enterprise-level complexity.
@@ -102,7 +102,7 @@ export default function PressKitPage() {
           <div className="reveal">
             <span className="kicker">Boilerplate · Long</span>
             <p className="mt-4 text-[15px] leading-relaxed text-[color:var(--ink-2)]">
-              CoreFlux is a small, senior software studio based in Houston,
+              Coreflux Solutions is a small, senior software studio based in Houston,
               Texas. The team builds custom operational systems &mdash; ERP,
               LMS, AI automation, data migration, web and mobile applications,
               and interactive games &mdash; for businesses that have outgrown
@@ -125,10 +125,10 @@ export default function PressKitPage() {
                 These links will be live once the press kit ships in full.
                 Email{" "}
                 <Link
-                  href="mailto:press@coreflux.studio"
+                  href="mailto:press@corefluxsolutions.com"
                   className="text-[color:var(--ink)] underline decoration-[color:var(--c1)] underline-offset-4"
                 >
-                  press@coreflux.studio
+                  press@corefluxsolutions.com
                 </Link>{" "}
                 for the originals in the meantime.
               </>

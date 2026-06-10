@@ -44,7 +44,7 @@ export default function Nav() {
     <header className="nav" ref={headerRef}>
       <div className="nav-inner">
         <Link href="/" className="logo" onClick={() => setOpenMenu(null)}>
-          coreflux<span className="dot" />
+          Coreflux Solutions<span className="dot" />
         </Link>
 
         <nav className="links" aria-label="Primary">

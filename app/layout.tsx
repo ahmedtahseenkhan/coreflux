@@ -26,20 +26,20 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://coreflux.studio"),
+  metadataBase: new URL("https://corefluxsolutions.com"),
   title: {
-    default: "CoreFlux — Practical software for serious businesses",
-    template: "%s · CoreFlux",
+    default: "Coreflux Solutions — Practical software for serious businesses",
+    template: "%s · Coreflux Solutions",
   },
   description:
     "Houston-based software studio. We build custom ERP, LMS, AI automation, data migration, web, app and gaming solutions — without enterprise-level complexity.",
   openGraph: {
-    title: "CoreFlux — Practical software for serious businesses",
+    title: "Coreflux Solutions — Practical software for serious businesses",
     description:
       "Custom ERP, LMS, AI automation, data migration, web, app and gaming solutions.",
     type: "website",
     locale: "en_US",
-    siteName: "CoreFlux",
+    siteName: "Coreflux Solutions",
   },
 };
 

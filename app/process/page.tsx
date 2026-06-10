@@ -6,7 +6,7 @@ import SectionHead from "@/components/SectionHead";
 export const metadata: Metadata = {
   title: "Process",
   description:
-    "Discovery, blueprint, build & iterate, launch & support — how a CoreFlux engagement runs from first call to launch.",
+    "Discovery, blueprint, build & iterate, launch & support — how a Coreflux Solutions engagement runs from first call to launch.",
 };
 
 const PHASES = [

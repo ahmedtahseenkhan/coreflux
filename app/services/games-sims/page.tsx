@@ -191,7 +191,7 @@ export default function GamesSimsPage() {
                 color: "rgba(255,255,255,.5)",
               }}
             >
-              <span style={{ color: "var(--c3)" }}>◆ CoreFlux — Analytics Dashboard</span>
+              <span style={{ color: "var(--c3)" }}>◆ Coreflux Solutions — Analytics Dashboard</span>
               <span>Session · Live</span>
             </div>
 

@@ -83,7 +83,7 @@ export default function Hero() {
             </div>
 
             <div className="orbit-core">
-              core<b>flux</b>
+              <span className="oc-name">Coreflux</span><span className="oc-sub">Solutions</span>
             </div>
 
             <span className="chip-float cf1"><span className="ic" /> ERP</span>

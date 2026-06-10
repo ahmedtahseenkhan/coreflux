@@ -72,7 +72,7 @@ export default function CTA() {
 
             <p className="mt-5 text-[13px] text-white/55">
               Or write directly to{" "}
-              <strong className="text-white">hello@coreflux.studio</strong>
+              <strong className="text-white">hello@corefluxsolutions.com</strong>
               {" "}— we read everything.
             </p>
           </div>

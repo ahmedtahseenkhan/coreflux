@@ -24,10 +24,10 @@ export default function FAQ({
           <p>
             If something isn&rsquo;t covered here, write to{" "}
             <a
-              href="mailto:hello@coreflux.studio"
+              href="mailto:hello@corefluxsolutions.com"
               className="text-[color:var(--ink)] underline decoration-[color:var(--c1)] underline-offset-4"
             >
-              hello@coreflux.studio
+              hello@corefluxsolutions.com
             </a>{" "}
             &mdash; you&rsquo;ll get a real answer within a working day.
           </p>

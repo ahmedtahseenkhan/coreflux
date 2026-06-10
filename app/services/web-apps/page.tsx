@@ -219,7 +219,7 @@ export default function WebAppsPage() {
                     className="ml-2 flex-1 rounded-full px-3 py-0.5 text-[11px] font-mono text-[color:var(--mute)]"
                     style={{ background: "color-mix(in oklab, var(--ink) 6%, var(--bg))" }}
                   >
-                    {s.label.toLowerCase().replace(/\s+/g, "-")}.coreflux.studio
+                    {s.label.toLowerCase().replace(/\s+/g, "-")}.corefluxsolutions.com
                   </span>
                 </div>
 

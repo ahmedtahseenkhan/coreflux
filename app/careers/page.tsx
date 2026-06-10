@@ -7,7 +7,7 @@ import CTA from "@/components/home/CTA";
 export const metadata: Metadata = {
   title: "Careers",
   description:
-    "Join CoreFlux — a small Houston-based studio building practical, custom software.",
+    "Join Coreflux Solutions — a small Houston-based studio building practical, custom software.",
 };
 
 const VALUES = [
@@ -69,7 +69,7 @@ export default function CareersPage() {
           </>
         }
         ctas={[
-          { href: "mailto:careers@coreflux.studio?subject=CoreFlux%20careers", label: "Email careers@coreflux.studio", primary: true },
+          { href: "mailto:careers@corefluxsolutions.com?subject=Coreflux Solutions%20careers", label: "Email careers@corefluxsolutions.com", primary: true },
           { href: "#roles", label: "See open roles" },
         ]}
         meta={[
@@ -114,10 +114,10 @@ export default function CareersPage() {
               <>
                 Don&rsquo;t see a fit but you think you&rsquo;re it? Email{" "}
                 <Link
-                  href="mailto:careers@coreflux.studio"
+                  href="mailto:careers@corefluxsolutions.com"
                   className="text-[color:var(--ink)] underline decoration-[color:var(--c1)] underline-offset-4"
                 >
-                  careers@coreflux.studio
+                  careers@corefluxsolutions.com
                 </Link>{" "}
                 with what you&rsquo;d want to build here.
               </>
@@ -145,7 +145,7 @@ export default function CareersPage() {
                   </p>
                 </div>
                 <Link
-                  href={`mailto:careers@coreflux.studio?subject=${encodeURIComponent(`Application: ${r.title}`)}`}
+                  href={`mailto:careers@corefluxsolutions.com?subject=${encodeURIComponent(`Application: ${r.title}`)}`}
                   className="btn primary self-start md:self-auto"
                 >
                   Apply <span className="arrow">↗</span>

@@ -24,7 +24,7 @@ export default function Footer() {
         <div className="foot-grid">
           <div className="foot-brand">
             <Link href="/" className="wordmark">
-              coreflux<span className="dot" />
+              Coreflux Solutions<span className="dot" />
             </Link>
             <h6>Practical software for serious businesses.</h6>
             <p>
@@ -57,7 +57,7 @@ export default function Footer() {
             <h5>Contact</h5>
             <ul>
               <li>
-                <a href="mailto:hello@coreflux.studio">hello@coreflux.studio</a>
+                <a href="mailto:hello@corefluxsolutions.com">hello@corefluxsolutions.com</a>
               </li>
               <li>Houston, TX</li>
               <li>Working with teams everywhere</li>
@@ -75,7 +75,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="foot-base">
-          <div>© {new Date().getFullYear()} CoreFlux Studio. All rights reserved.</div>
+          <div>© {new Date().getFullYear()} Coreflux Solutions. All rights reserved.</div>
           <div>Built in-house · v1.0</div>
         </div>
       </div>

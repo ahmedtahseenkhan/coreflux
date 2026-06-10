@@ -5,7 +5,7 @@ import CTA from "@/components/home/CTA";
 export const metadata: Metadata = {
   title: "Approach",
   description:
-    "How CoreFlux builds software — practical, scalable, fully owned by you.",
+    "How Coreflux Solutions builds software — practical, scalable, fully owned by you.",
 };
 
 const PRINCIPLES = [
