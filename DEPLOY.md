@@ -37,7 +37,46 @@ npm run build
 pm2 reload coreflux   # zero-downtime restart
 ```
 
-## 3. nginx -> coreflux.com (do when DNS is ready)
+## 3. Email env (contact form)
+
+The `/api/contact` form sends each enquiry to **Info@corefluxsolutions.com** over
+SMTP. Secrets live in a **gitignored** env file that Next.js auto-loads at runtime
+— never commit them. Create it once on the server:
+
+```bash
+cd /var/www/coreflux
+# .env.production.local is loaded automatically by `next start` (production)
+cat > .env.production.local <<'EOF'
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=Ultimatelifecarecoaching@gmail.com
+SMTP_PASSWORD=your-gmail-app-password   # 16-char app password, not the login pwd
+SMTP_FROM_NAME=corefluxsolutions
+SMTP_FROM_EMAIL=Info@corefluxsolutions.com
+CONTACT_TO=Info@corefluxsolutions.com
+EOF
+chmod 600 .env.production.local
+pm2 reload coreflux
+```
+
+Then verify delivery:
+
+```bash
+curl -s -X POST http://localhost:3030/api/contact \
+  -H "Content-Type: application/json" \
+  -d '{"service":"ERP","name":"Deploy Test","email":"t@example.com","phone":"123","brief":"test"}'
+# expect: {"ok":true,"delivered":true}
+```
+
+If `delivered:false`, the env file is missing/wrong — the form then falls back to
+opening the visitor's mail client addressed to Info@corefluxsolutions.com.
+
+> **Gmail note:** the From may show the authenticated Gmail account unless
+> `Info@corefluxsolutions.com` is added as a verified "Send mail as" alias in that
+> Gmail account (Settings → Accounts and Import → Send mail as).
+
+## 4. nginx -> coreflux.com (do when DNS is ready)
 
 Point `coreflux.com` (A record) at the server's public IP first. Then:
 
@@ -66,7 +105,7 @@ sudo ln -s /etc/nginx/sites-available/coreflux.com /etc/nginx/sites-enabled/
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
-## 4. HTTPS (Let's Encrypt)
+## 5. HTTPS (Let's Encrypt)
 
 ```bash
 sudo certbot --nginx -d coreflux.com -d www.coreflux.com
@@ -80,5 +119,5 @@ certbot rewrites the server block for 443 + auto-renews.
 - Make sure the AWS **security group** allows inbound 80/443. The app port
   (3030) stays internal — only nginx talks to it.
 - Node 18+ required (server has a recent Node already for the other app).
-- The `/api/contact` form currently no-ops (no backend). Wire it to an email
-  service or an API route before relying on it.
+- The `/api/contact` form sends via SMTP using `.env.production.local` (section 3).
+  Without it the form falls back to a mailto: link to Info@corefluxsolutions.com.

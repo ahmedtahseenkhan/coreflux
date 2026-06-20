@@ -57,7 +57,7 @@ export default function Footer() {
             <h5>Contact</h5>
             <ul>
               <li>
-                <a href="mailto:hello@corefluxsolutions.com">hello@corefluxsolutions.com</a>
+                <a href="mailto:Info@corefluxsolutions.com">Info@corefluxsolutions.com</a>
               </li>
               <li>Houston, TX</li>
               <li>Working with teams everywhere</li>
