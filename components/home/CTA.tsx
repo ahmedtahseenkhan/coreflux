@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useRef, useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 
 const SERVICES = [
   "ERP Solutions",
@@ -113,6 +114,14 @@ export default function CTA() {
     // If the server didn't send it, hand off to the visitor's email client so
     // the enquiry still reaches Info@corefluxsolutions.com.
     if (!delivered) openMailto();
+
+    // GA4 conversion (only sent if the visitor accepted analytics).
+    // "generate_lead" is GA4's recommended event name for enquiries.
+    trackEvent("generate_lead", {
+      form_id: "contact",
+      method: delivered ? "server" : "mailto",
+      service: service || "unspecified",
+    });
 
     setStatus(delivered ? "sent" : "mailto");
     setErrors({});

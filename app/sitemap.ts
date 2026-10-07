@@ -9,6 +9,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...SERVICES.map((s) => s.href),
     ...STUDIO.map((s) => s.href),
     ...Object.keys(STUDIES).map((slug) => `/case-studies/${slug}`),
+    "/privacy",
+    "/terms",
   ];
   return paths.map((path) => ({
     url: path === "/" ? SITE_URL : `${SITE_URL}${path}`,

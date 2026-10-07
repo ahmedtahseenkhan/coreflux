@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SOCIAL_LINKS } from "@/lib/site";
+import { CookieSettingsButton } from "@/components/Analytics";
 
 const SERVICES = [
   { href: "/services/erp", label: "ERP Solutions" },
@@ -75,6 +76,11 @@ export default function Footer() {
         </div>
         <div className="foot-base">
           <div>© {new Date().getFullYear()} Coreflux Solutions. All rights reserved.</div>
+          <nav aria-label="Legal" className="foot-legal">
+            <Link href="/privacy">Privacy policy</Link>
+            <Link href="/terms">Terms</Link>
+            <CookieSettingsButton />
+          </nav>
           <div>Built in-house · v1.0</div>
         </div>
       </div>
