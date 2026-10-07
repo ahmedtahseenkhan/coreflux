@@ -14,8 +14,13 @@ export default function Nav() {
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") {
+        // If focus is inside an open panel, hand it back to that panel's button.
+        const trigger = (document.activeElement as HTMLElement | null)
+          ?.closest(".has-mega")
+          ?.querySelector<HTMLButtonElement>(".mega-trigger");
         setOpenMenu(null);
         setMobileOpen(false);
+        trigger?.focus();
       }
     }
     function onClick(e: MouseEvent) {
@@ -39,6 +44,10 @@ export default function Nav() {
     if (closeTimer.current) clearTimeout(closeTimer.current);
     closeTimer.current = setTimeout(() => setOpenMenu(null), 140);
   };
+  // Keyboard users tabbing out of a dropdown should close it.
+  const blurClose = (e: React.FocusEvent<HTMLDivElement>) => {
+    if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOpenMenu(null);
+  };
 
   return (
     <header className="nav" ref={headerRef}>
@@ -53,12 +62,13 @@ export default function Nav() {
             className="has-mega"
             onMouseEnter={() => hoverOpen("services")}
             onMouseLeave={hoverClose}
+            onBlur={blurClose}
           >
             <button
               className="mega-trigger"
               data-open={openMenu === "services"}
               aria-expanded={openMenu === "services"}
-              aria-haspopup="true"
+              aria-controls="mega-services"
               onClick={() =>
                 setOpenMenu((m) => (m === "services" ? null : "services"))
               }
@@ -66,6 +76,7 @@ export default function Nav() {
               Services <span className="caret">▾</span>
             </button>
             <MegaPanel
+              id="mega-services"
               open={openMenu === "services"}
               items={SERVICES}
               footHref="/#services"
@@ -79,12 +90,13 @@ export default function Nav() {
             className="has-mega"
             onMouseEnter={() => hoverOpen("studio")}
             onMouseLeave={hoverClose}
+            onBlur={blurClose}
           >
             <button
               className="mega-trigger"
               data-open={openMenu === "studio"}
               aria-expanded={openMenu === "studio"}
-              aria-haspopup="true"
+              aria-controls="mega-studio"
               onClick={() =>
                 setOpenMenu((m) => (m === "studio" ? null : "studio"))
               }
@@ -92,6 +104,7 @@ export default function Nav() {
               Studio <span className="caret">▾</span>
             </button>
             <MegaPanel
+              id="mega-studio"
               open={openMenu === "studio"}
               items={STUDIO}
               footHref="/case-studies"
@@ -153,12 +166,14 @@ export default function Nav() {
 }
 
 function MegaPanel({
+  id,
   open,
   items,
   footHref,
   footLabel,
   onNavigate,
 }: {
+  id: string;
   open: boolean;
   items: NavItem[];
   footHref: string;
@@ -166,14 +181,13 @@ function MegaPanel({
   onNavigate: () => void;
 }) {
   return (
-    <div className={`mega-panel ${open ? "open" : ""}`} role="menu">
+    <div id={id} className={`mega-panel ${open ? "open" : ""}`}>
       <div className="mega-grid">
         {items.map((it) => (
           <Link
             key={it.href}
             href={it.href}
             className="mega-item"
-            role="menuitem"
             onClick={onNavigate}
             tabIndex={open ? 0 : -1}
           >

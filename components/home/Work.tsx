@@ -64,7 +64,7 @@ export default function Work() {
                       {it.tag}
                     </span>
                     {it.live ? (
-                      <span className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-[0.08em] text-[#16a34a]">
+                      <span className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-[0.08em] text-[#15803d]">
                         <span className="block h-2 w-2 rounded-full" style={{ background: '#16a34a', animation: 'workPulse 2.2s ease-out infinite' }} />
                         Live
                       </span>

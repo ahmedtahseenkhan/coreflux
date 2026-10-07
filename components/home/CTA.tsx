@@ -142,7 +142,7 @@ export default function CTA() {
   };
 
   const fieldClass = (field: Field) =>
-    "w-full bg-white/10 border px-5 py-4 text-white placeholder:text-white/40 outline-none focus:border-[#A855F7] focus:bg-white/15 transition rounded-[12px] " +
+    "w-full bg-white/10 border px-5 py-4 text-white placeholder:text-white/55 outline-none focus:border-[#A855F7] focus:bg-white/15 transition rounded-[12px] " +
     (errors[field] ? "border-[#F87171]" : "border-white/20");
 
   // Props wiring a field to its label, error message and validity state.

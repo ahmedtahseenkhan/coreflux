@@ -82,9 +82,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body>
         <JsonLd data={ORGANIZATION} />
+        <a href="#main" className="skip-link">
+          Skip to content
+        </a>
         <RevealObserver />
         <Nav />
-        {children}
+        <main id="main" tabIndex={-1} className="outline-none">
+          {children}
+        </main>
         <Footer />
         <Analytics />
       </body>

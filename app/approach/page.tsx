@@ -218,7 +218,7 @@ export default function ApproachPage() {
                 style={{ transitionDelay: `${i * 60}ms` }}
               >
                 {/* Number */}
-                <div className="font-serif text-[64px] leading-none text-[color:var(--line)] select-none">
+                <div className="font-serif text-[64px] leading-none text-[color:var(--line)] select-none" aria-hidden>
                   {p.n}
                 </div>
 
