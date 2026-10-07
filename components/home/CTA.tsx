@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useRef, useState } from "react";
 
 const SERVICES = [
   "ERP Solutions",
@@ -11,13 +11,36 @@ const SERVICES = [
   "Games & Simulations",
 ];
 
+type Field = "name" | "email" | "phone" | "brief";
+type Status = "idle" | "sending" | "sent" | "mailto" | "error";
+
+// Mirrors the server-side checks in app/api/contact/route.ts.
+function validate(name: string, email: string, phone: string) {
+  const errors: Partial<Record<Field, string>> = {};
+  if (!name.trim()) errors.name = "Please enter your name.";
+  if (!email.trim()) errors.email = "Please enter your email address.";
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim()))
+    errors.email = "Please enter a valid email address.";
+  if (!phone.trim()) errors.phone = "Please enter your phone number.";
+  else if (!/^[+()\d\s.-]{7,25}$/.test(phone.trim()) || (phone.match(/\d/g) || []).length < 7)
+    errors.phone = "Please enter a valid phone number.";
+  return errors;
+}
+
 export default function CTA() {
   const [service, setService] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [brief, setBrief] = useState("");
-  const [sent, setSent] = useState(false);
+  const [website, setWebsite] = useState(""); // honeypot
+  const [status, setStatus] = useState<Status>("idle");
+  const [errors, setErrors] = useState<Partial<Record<Field, string>>>({});
+  const [serverError, setServerError] = useState("");
+  const renderedAt = useRef(Date.now());
+  const formRef = useRef<HTMLFormElement>(null);
+  const uid = useId();
+  const fid = (f: string) => `${uid}-${f}`;
 
   const CONTACT_EMAIL = "Info@corefluxsolutions.com";
 
@@ -39,18 +62,49 @@ export default function CTA() {
     )}&body=${encodeURIComponent(body)}`;
   };
 
+  const focusFirstError = (errs: Partial<Record<Field, string>>) => {
+    const first = (["name", "email", "phone", "brief"] as Field[]).find((f) => errs[f]);
+    if (first) formRef.current?.querySelector<HTMLElement>(`#${CSS.escape(fid(first))}`)?.focus();
+  };
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email || !phone) return;
+    if (status === "sending") return;
+    setServerError("");
 
+    const clientErrors = validate(name, email, phone);
+    setErrors(clientErrors);
+    if (Object.keys(clientErrors).length) {
+      focusFirstError(clientErrors);
+      return;
+    }
+
+    setStatus("sending");
     let delivered = false;
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ service, name, email, phone, brief }),
+        body: JSON.stringify({
+          service,
+          name,
+          email,
+          phone,
+          brief,
+          website,
+          elapsed: Date.now() - renderedAt.current,
+        }),
       });
       const data = await res.json().catch(() => null);
+      // Validation or rate-limit problems: show them, keep what was typed.
+      if (res.status === 400 || res.status === 429) {
+        const errs = (data?.errors || {}) as Partial<Record<Field, string>>;
+        setErrors(errs);
+        setServerError(data?.error || "Something went wrong. Please try again.");
+        setStatus("error");
+        focusFirstError(errs);
+        return;
+      }
       delivered = !!(data && data.ok && data.delivered);
     } catch (err) {
       console.error(err);
@@ -60,17 +114,52 @@ export default function CTA() {
     // the enquiry still reaches Info@corefluxsolutions.com.
     if (!delivered) openMailto();
 
-    setSent(true);
+    setStatus(delivered ? "sent" : "mailto");
+    setErrors({});
     setService("");
     setName("");
     setEmail("");
     setPhone("");
     setBrief("");
-    setTimeout(() => setSent(false), 5000);
   };
 
-  const fieldClass =
-    "w-full bg-white/10 border border-white/20 px-5 py-4 text-white placeholder:text-white/40 outline-none focus:border-[#A855F7] focus:bg-white/15 transition rounded-[12px]";
+  // Clears a field's error as soon as the visitor edits it.
+  const edit = (field: Field, set: (v: string) => void) => (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    set(e.target.value);
+    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }));
+    if (status !== "idle" && status !== "sending") setStatus("idle");
+  };
+
+  const fieldClass = (field: Field) =>
+    "w-full bg-white/10 border px-5 py-4 text-white placeholder:text-white/40 outline-none focus:border-[#A855F7] focus:bg-white/15 transition rounded-[12px] " +
+    (errors[field] ? "border-[#F87171]" : "border-white/20");
+
+  // Props wiring a field to its label, error message and validity state.
+  const a11y = (field: Field) => ({
+    id: fid(field),
+    "aria-invalid": errors[field] ? true : undefined,
+    "aria-describedby": errors[field] ? fid(`${field}-error`) : undefined,
+  });
+
+  const fieldError = (field: Field) =>
+    errors[field] ? (
+      <p id={fid(`${field}-error`)} className="mt-2 text-[13px] text-[#FCA5A5]">
+        {errors[field]}
+      </p>
+    ) : null;
+
+  const statusMessage =
+    status === "sent"
+      ? "Thanks — your request is in. We\u2019ll reply within one working day."
+      : status === "mailto"
+      ? `Your email app should have opened with your message to ${CONTACT_EMAIL} — press send there to finish. If nothing opened, email us directly.`
+      : status === "error"
+      ? serverError
+      : Object.values(errors).some(Boolean)
+      ? "Please check the highlighted fields."
+      : "";
 
   return (
     <section id="contact" className="section">
@@ -119,9 +208,12 @@ export default function CTA() {
             </div>
 
             {/* Right: form */}
-            <form onSubmit={submit} className="flex flex-col gap-6">
-              <div>
-                <p className="mb-3 text-[13px] font-medium uppercase tracking-[0.08em] text-white/55">
+            <form ref={formRef} onSubmit={submit} noValidate className="relative flex flex-col gap-6">
+              <div role="group" aria-labelledby={fid("service")}>
+                <p
+                  id={fid("service")}
+                  className="mb-3 text-[13px] font-medium uppercase tracking-[0.08em] text-white/55"
+                >
                   I'm looking for
                 </p>
                 <div className="grid grid-cols-2 gap-3">
@@ -131,6 +223,7 @@ export default function CTA() {
                       <button
                         key={s}
                         type="button"
+                        aria-pressed={active}
                         onClick={() => setService(active ? "" : s)}
                         className={
                           "rounded-[12px] border px-4 py-3 text-[13px] font-medium text-left transition " +
@@ -147,47 +240,119 @@ export default function CTA() {
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label htmlFor={fid("name")} className="sr-only">
+                    Full name (required)
+                  </label>
+                  <input
+                    {...a11y("name")}
+                    name="name"
+                    type="text"
+                    required
+                    autoComplete="name"
+                    maxLength={100}
+                    placeholder="Full name *"
+                    value={name}
+                    onChange={edit("name", setName)}
+                    className={fieldClass("name")}
+                  />
+                  {fieldError("name")}
+                </div>
+                <div>
+                  <label htmlFor={fid("email")} className="sr-only">
+                    Email address (required)
+                  </label>
+                  <input
+                    {...a11y("email")}
+                    name="email"
+                    type="email"
+                    required
+                    autoComplete="email"
+                    maxLength={200}
+                    placeholder="Email address *"
+                    value={email}
+                    onChange={edit("email", setEmail)}
+                    className={fieldClass("email")}
+                  />
+                  {fieldError("email")}
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor={fid("phone")} className="sr-only">
+                  Phone number (required)
+                </label>
                 <input
-                  type="text"
+                  {...a11y("phone")}
+                  name="phone"
+                  type="tel"
                   required
-                  placeholder="Full name *"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className={fieldClass}
+                  autoComplete="tel"
+                  maxLength={25}
+                  placeholder="Phone number *"
+                  value={phone}
+                  onChange={edit("phone", setPhone)}
+                  className={fieldClass("phone")}
                 />
+                {fieldError("phone")}
+              </div>
+
+              <div>
+                <label htmlFor={fid("brief")} className="sr-only">
+                  Tell us about the project
+                </label>
+                <textarea
+                  {...a11y("brief")}
+                  name="brief"
+                  maxLength={5000}
+                  placeholder="Tell us about the project"
+                  value={brief}
+                  onChange={edit("brief", setBrief)}
+                  rows={4}
+                  className={fieldClass("brief") + " resize-none"}
+                />
+                {fieldError("brief")}
+              </div>
+
+              {/* Honeypot: off-screen and skipped by keyboard and screen readers.
+                  People never fill it in; bots that auto-fill every field do. */}
+              <div aria-hidden="true" className="absolute -left-[9999px] top-0 h-px w-px overflow-hidden">
+                <label htmlFor={fid("website")}>Leave this field empty</label>
                 <input
-                  type="email"
-                  required
-                  placeholder="Email address *"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className={fieldClass}
+                  id={fid("website")}
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
                 />
               </div>
 
-              <input
-                type="tel"
-                required
-                placeholder="Phone number *"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className={fieldClass}
-              />
-
-              <textarea
-                placeholder="Tell us about the project"
-                value={brief}
-                onChange={(e) => setBrief(e.target.value)}
-                rows={4}
-                className={fieldClass + " resize-none"}
-              />
-
               <button
                 type="submit"
-                className="rounded-[12px] border border-white bg-white text-[#0F0B1E] px-6 py-4 font-semibold text-[13px] uppercase tracking-[0.08em] hover:bg-[#A855F7] hover:border-[#A855F7] hover:text-white transition"
+                disabled={status === "sending"}
+                className="rounded-[12px] border border-white bg-white text-[#0F0B1E] px-6 py-4 font-semibold text-[13px] uppercase tracking-[0.08em] hover:bg-[#A855F7] hover:border-[#A855F7] hover:text-white transition disabled:cursor-wait disabled:opacity-70"
               >
-                {sent ? "Got it ✓ We'll be in touch" : "Submit request →"}
+                {status === "sending"
+                  ? "Sending…"
+                  : status === "sent"
+                  ? "Got it ✓ We'll be in touch"
+                  : "Submit request →"}
               </button>
+
+              <p
+                role="status"
+                aria-live="polite"
+                className={
+                  "text-[14px] leading-relaxed empty:hidden " +
+                  (status === "error" || (status === "idle" && statusMessage)
+                    ? "text-[#FCA5A5]"
+                    : "text-white/80")
+                }
+              >
+                {statusMessage}
+              </p>
             </form>
           </div>
         </div>

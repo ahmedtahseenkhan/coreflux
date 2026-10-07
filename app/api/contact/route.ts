@@ -3,13 +3,46 @@ import { NextRequest, NextResponse } from "next/server";
 // Where every "I'm looking for" enquiry is delivered.
 const CONTACT_TO = process.env.CONTACT_TO || "Info@corefluxsolutions.com";
 
+const SERVICES = [
+  "ERP Solutions",
+  "Learning Management",
+  "Migration & Integration",
+  "Automation & Intelligence",
+  "Web & App Development",
+  "Games & Simulations",
+];
+
 type Payload = {
   service?: string;
   name?: string;
   email?: string;
   phone?: string;
   brief?: string;
+  /** Honeypot: hidden from people, filled in by bots. */
+  website?: string;
+  /** Milliseconds between the form rendering and being submitted. */
+  elapsed?: number;
 };
+
+type Field = "name" | "email" | "phone" | "brief";
+
+// ---- Spam protection -------------------------------------------------------
+// Submissions faster than this are almost certainly scripted.
+const MIN_FILL_MS = 2500;
+// Per-IP limit. In-memory is enough for the single pm2 instance; it resets on
+// restart, which is fine for keeping out bursts.
+const RATE_LIMIT = 5;
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+const hits = new Map<string, number[]>();
+
+function rateLimited(ip: string) {
+  const now = Date.now();
+  const recent = (hits.get(ip) || []).filter((t) => now - t < RATE_WINDOW_MS);
+  recent.push(now);
+  hits.set(ip, recent);
+  if (hits.size > 5000) hits.clear(); // keep memory bounded
+  return recent.length > RATE_LIMIT;
+}
 
 function escapeHtml(s: string) {
   return s
@@ -17,6 +50,23 @@ function escapeHtml(s: string) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+// Trim and drop line breaks so values can't inject extra mail headers.
+const oneLine = (v: unknown) => (v ?? "").toString().replace(/[\r\n]+/g, " ").trim();
+
+function validate(name: string, email: string, phone: string, brief: string) {
+  const errors: Partial<Record<Field, string>> = {};
+  if (!name) errors.name = "Please enter your name.";
+  else if (name.length > 100) errors.name = "Please keep your name under 100 characters.";
+  if (!email) errors.email = "Please enter your email address.";
+  else if (email.length > 200 || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email))
+    errors.email = "Please enter a valid email address.";
+  if (!phone) errors.phone = "Please enter your phone number.";
+  else if (!/^[+()\d\s.-]{7,25}$/.test(phone) || (phone.match(/\d/g) || []).length < 7)
+    errors.phone = "Please enter a valid phone number.";
+  if (brief.length > 5000) errors.brief = "Please keep the project description under 5,000 characters.";
+  return errors;
 }
 
 export async function POST(req: NextRequest) {
@@ -27,15 +77,32 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, error: "Invalid request." }, { status: 400 });
   }
 
-  const service = (body.service || "").toString().trim();
-  const name = (body.name || "").toString().trim();
-  const email = (body.email || "").toString().trim();
-  const phone = (body.phone || "").toString().trim();
+  // Bots: answer as if it worked so they don't adapt, but send nothing.
+  if (oneLine(body.website) || (typeof body.elapsed === "number" && body.elapsed < MIN_FILL_MS)) {
+    return NextResponse.json({ ok: true, delivered: true });
+  }
+
+  const ip = (req.headers.get("x-forwarded-for") || "").split(",")[0].trim() || "unknown";
+  if (rateLimited(ip)) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: `Too many requests — please try again in a few minutes, or email ${CONTACT_TO}.`,
+      },
+      { status: 429 }
+    );
+  }
+
+  const service = SERVICES.includes(oneLine(body.service)) ? oneLine(body.service) : "";
+  const name = oneLine(body.name);
+  const email = oneLine(body.email);
+  const phone = oneLine(body.phone);
   const brief = (body.brief || "").toString().trim();
 
-  if (!name || !email || !phone) {
+  const errors = validate(name, email, phone, brief);
+  if (Object.keys(errors).length) {
     return NextResponse.json(
-      { ok: false, error: "Name, email and phone are required." },
+      { ok: false, error: "Please check the highlighted fields.", errors },
       { status: 400 }
     );
   }
@@ -88,7 +155,7 @@ export async function POST(req: NextRequest) {
     await transporter.sendMail({
       from,
       to: CONTACT_TO,
-      replyTo: `${name} <${email}>`,
+      replyTo: { name, address: email },
       subject,
       text: lines.map(([k, v]) => `${k}: ${v}`).join("\n"),
       html: `<h2>New website enquiry</h2><table cellpadding="6" style="font-family:sans-serif;font-size:14px">${lines
