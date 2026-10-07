@@ -82,7 +82,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true, delivered: true });
   }
 
-  const ip = (req.headers.get("x-forwarded-for") || "").split(",")[0].trim() || "unknown";
+  // The proxy (Apache) appends the real client IP, so trust the last entry;
+  // earlier ones are whatever the client chose to send.
+  const ip = (req.headers.get("x-forwarded-for") || "").split(",").pop()?.trim() || "unknown";
   if (rateLimited(ip)) {
     return NextResponse.json(
       {
