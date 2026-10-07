@@ -760,9 +760,9 @@ footer {
   margin-left: 2px;
   display: inline-block;
 }
-.foot-brand h6 { font-size: 13px; color: var(--ink-2); margin: 14px 0 8px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
 .foot-brand p { font-size: 14px; color: var(--mute); line-height: 1.6; max-width: 32ch; margin: 0; }
-footer h5 {
+.foot-brand .tagline { font-size: 13px; color: var(--ink-2); margin: 14px 0 8px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; line-height: 1.5; max-width: none; }
+footer h2 {
   font-family: var(--font-geist-mono), monospace;
   font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
   color: var(--c1); margin: 0 0 16px;

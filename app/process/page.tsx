@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import Link from "next/link";
 import CTA from "@/components/home/CTA";
 import SectionHead from "@/components/SectionHead";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Process",
   description:
     "Discovery, blueprint, build & iterate, launch & support — how a Coreflux Solutions engagement runs from first call to launch.",
-};
+  path: "/process",
+});
 
 const PHASES = [
   {
@@ -302,10 +304,10 @@ export default function ProcessPage() {
             }}
           >
             <span className="kicker">Start here</span>
-            <h3 className="mt-4 font-serif text-[36px] md:text-[44px] leading-tight text-[color:var(--ink)] max-w-[22ch]">
+            <h2 className="mt-4 font-serif text-[36px] md:text-[44px] leading-tight text-[color:var(--ink)] max-w-[22ch]">
               Discovery is free. It&rsquo;s a working session, not a{" "}
               <em className="italic text-[color:var(--c1)]">pitch</em>.
-            </h3>
+            </h2>
             <p className="mt-4 text-[15px] leading-relaxed text-[color:var(--ink-2)] max-w-[56ch]">
               One call. You describe the problem, we describe what we&rsquo;d
               build and what it&rsquo;d cost. No commitment, no follow-up

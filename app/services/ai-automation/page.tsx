@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import SectionHead from "@/components/SectionHead";
@@ -6,11 +7,12 @@ import CapabilityGrid from "@/components/CapabilityGrid";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/home/CTA";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "AI Business Automation",
   description:
     "AI chatbots, workflow tools, internal knowledge assistants, customer support automation, document processing and reporting automation.",
-};
+  path: "/services/ai-automation",
+});
 
 const CAPABILITIES = [
   {
@@ -351,9 +353,9 @@ function Stage({
       <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-[color:var(--c1)]">
         {tag}
       </div>
-      <h4 className="mt-3 font-serif text-[24px] leading-tight text-[color:var(--ink)]">
+      <h3 className="mt-3 font-serif text-[24px] leading-tight text-[color:var(--ink)]">
         {title}
-      </h4>
+      </h3>
       <ul className="mt-4 space-y-1.5">
         {lines.map((l) => (
           <li key={l} className="text-[13.5px] text-[color:var(--ink-2)]">

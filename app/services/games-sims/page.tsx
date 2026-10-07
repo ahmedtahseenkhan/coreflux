@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import SectionHead from "@/components/SectionHead";
@@ -6,11 +7,12 @@ import CapabilityGrid from "@/components/CapabilityGrid";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/home/CTA";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Gaming & Interactive Apps",
   description:
     "Mobile games, web games, educational games, training simulations and gamified apps with measurable outcomes.",
-};
+  path: "/services/games-sims",
+});
 
 const CAPABILITIES = [
   {

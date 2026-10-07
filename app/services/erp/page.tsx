@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import SectionHead from "@/components/SectionHead";
@@ -6,11 +7,12 @@ import CapabilityGrid from "@/components/CapabilityGrid";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/home/CTA";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "ERP Solutions",
   description:
     "Custom ERP systems for inventory, HR, accounting, CRM, operations and reporting — built around how your team actually works.",
-};
+  path: "/services/erp",
+});
 
 const CAPABILITIES = [
   {
@@ -229,9 +231,9 @@ export default function ERPPage() {
                 <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-[color:var(--c1)]">
                   {l.tag}
                 </span>
-                <h4 className="mt-3 font-serif text-[26px] text-[color:var(--ink)]">
+                <h3 className="mt-3 font-serif text-[26px] text-[color:var(--ink)]">
                   {l.step}
-                </h4>
+                </h3>
                 <p className="mt-3 text-[14.5px] leading-relaxed text-[color:var(--ink-2)]">
                   {l.desc}
                 </p>
@@ -258,9 +260,9 @@ export default function ERPPage() {
                 <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-[color:var(--mute)]">
                   {String(i + 1).padStart(2, "0")} / {String(DELIVERABLES.length).padStart(2, "0")}
                 </div>
-                <h4 className="mt-3 font-serif text-[22px] text-[color:var(--ink)]">
+                <h3 className="mt-3 font-serif text-[22px] text-[color:var(--ink)]">
                   {d.label}
-                </h4>
+                </h3>
                 <p className="mt-2 text-[14px] leading-relaxed text-[color:var(--ink-2)]">
                   {d.body}
                 </p>

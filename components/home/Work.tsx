@@ -7,15 +7,18 @@ type WorkItem = {
   href?: string;
   live?: boolean;
   thumb?: string;
+  thumbAlt?: string;
+  /** Slug of the matching case study page, for cards without a live site. */
+  caseStudy?: string;
 };
 
 const ITEMS: WorkItem[] = [
-  { tag: "EdTech / SaaS", title: "EmpowerEd Learnings — platform for independent mentors", meta: "Profiles · Scheduling · Payments · AI", href: "https://emplearnings.com/", live: true, thumb: "/work/emplearnings.jpg" },
-  { tag: "ERP / Logistics", title: "Multi-warehouse inventory & dispatch ERP", meta: "Operations · Inventory · Reporting" },
-  { tag: "Data Migration", title: "Legacy CRM → modern data platform", meta: "Excel · Old CRM · Clean schema" },
-  { tag: "AI Automation", title: "Internal knowledge assistant & ticket triage", meta: "RAG · Workflow AI · Support" },
-  { tag: "Web & Apps", title: "Booking platform & client portal", meta: "Web · Mobile · Admin dashboards" },
-  { tag: "Gaming / Interactive", title: "Gamified training simulation", meta: "Web game · Onboarding · Scoring" },
+  { tag: "EdTech / SaaS", title: "EmpowerEd Learnings — platform for independent mentors", meta: "Profiles · Scheduling · Payments · AI", href: "https://emplearnings.com/", live: true, thumb: "/work/emplearnings.jpg", thumbAlt: "EmpowerEd Learnings homepage: \u201cThe Virtual Office for Independent Mentors\u201d" },
+  { tag: "ERP / Logistics", title: "Multi-warehouse inventory & dispatch ERP", meta: "Operations · Inventory · Reporting", caseStudy: "logistics-erp" },
+  { tag: "Data Migration", title: "Legacy CRM → modern data platform", meta: "Excel · Old CRM · Clean schema", caseStudy: "crm-migration" },
+  { tag: "AI Automation", title: "Internal knowledge assistant & ticket triage", meta: "RAG · Workflow AI · Support", caseStudy: "internal-ai-assistant" },
+  { tag: "Web & Apps", title: "Booking platform & client portal", meta: "Web · Mobile · Admin dashboards", caseStudy: "booking-platform" },
+  { tag: "Gaming / Interactive", title: "Gamified training simulation", meta: "Web game · Onboarding · Scoring", caseStudy: "training-sim" },
 ];
 
 export default function Work() {
@@ -47,7 +50,7 @@ export default function Work() {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={it.thumb}
-                      alt={it.title}
+                      alt={it.thumbAlt ?? ""}
                       className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
                       loading="lazy"
                     />
@@ -104,6 +107,15 @@ export default function Work() {
               >
                 {inner}
               </a>
+            ) : it.caseStudy ? (
+              <Link
+                key={it.title}
+                href={`/case-studies/${it.caseStudy}`}
+                className={cls}
+                style={{ transitionDelay: `${i * 40}ms` }}
+              >
+                {inner}
+              </Link>
             ) : (
               <article
                 key={it.title}

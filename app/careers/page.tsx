@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import SectionHead from "@/components/SectionHead";
 import CTA from "@/components/home/CTA";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Careers",
   description:
     "Join Coreflux Solutions — a small Houston-based studio building practical, custom software.",
-};
+  path: "/careers",
+});
 
 const VALUES = [
   {
@@ -137,9 +139,9 @@ export default function CareersPage() {
                   <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-[color:var(--c1)]">
                     {r.team} · {r.type}
                   </div>
-                  <h4 className="mt-2 font-serif text-[26px] leading-tight text-[color:var(--ink)]">
+                  <h3 className="mt-2 font-serif text-[26px] leading-tight text-[color:var(--ink)]">
                     {r.title}
-                  </h4>
+                  </h3>
                   <p className="mt-2 max-w-[60ch] text-[14.5px] leading-relaxed text-[color:var(--ink-2)]">
                     {r.body}
                   </p>

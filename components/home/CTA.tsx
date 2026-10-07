@@ -93,10 +93,10 @@ export default function CTA() {
                 Let's build
               </span>
 
-              <h3 className="mt-6 font-serif text-[36px] md:text-[52px] leading-[1.1] tracking-tight max-w-[18ch]">
+              <h2 className="mt-6 font-serif text-[36px] md:text-[52px] leading-[1.1] tracking-tight max-w-[18ch]">
                 Have a system in mind?{" "}
                 <em className="italic text-[#A855F7]">Let's</em> sketch it together.
-              </h3>
+              </h2>
 
               <p className="mt-5 text-[16px] leading-relaxed max-w-[44ch] text-white/75">
                 Tell us a little about the problem. We'll reply within one working day.

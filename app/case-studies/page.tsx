@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import SectionHead from "@/components/SectionHead";
 import CTA from "@/components/home/CTA";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Case studies",
   description:
     "Selected work from the team behind Coreflux Solutions — ERP, LMS, AI, data migration, web and gaming systems built for real teams.",
-};
+  path: "/case-studies",
+});
 
 type Status = "Live" | "In production" | "Coming soon";
 

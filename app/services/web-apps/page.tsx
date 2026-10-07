@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import SectionHead from "@/components/SectionHead";
@@ -6,11 +7,12 @@ import CapabilityGrid from "@/components/CapabilityGrid";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/home/CTA";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Website & App Development",
   description:
     "Business websites, booking platforms, e-commerce, mobile apps, client portals and admin dashboards built to perform.",
-};
+  path: "/services/web-apps",
+});
 
 const SURFACES = [
   {

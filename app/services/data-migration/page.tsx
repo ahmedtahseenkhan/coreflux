@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import SectionHead from "@/components/SectionHead";
@@ -6,11 +7,12 @@ import CapabilityGrid from "@/components/CapabilityGrid";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/home/CTA";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Data Migration",
   description:
     "Move data from Excel, old CRMs, legacy databases, paper or manual systems into clean, modern systems without losing history.",
-};
+  path: "/services/data-migration",
+});
 
 const SOURCES = [
   { name: "Spreadsheets", note: "Excel · Google Sheets · CSV" },
@@ -306,9 +308,9 @@ export default function DataMigrationPage() {
                   {p.n}
                 </div>
                 <div>
-                  <h4 className="font-serif text-[26px] leading-tight text-[color:var(--ink)]">
+                  <h3 className="font-serif text-[26px] leading-tight text-[color:var(--ink)]">
                     {p.t}
-                  </h4>
+                  </h3>
                 </div>
                 <p className="text-[14.5px] leading-relaxed text-[color:var(--ink-2)]">
                   {p.b}

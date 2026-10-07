@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import Link from "next/link";
 import CTA from "@/components/home/CTA";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Approach",
   description:
     "How Coreflux Solutions builds software — practical, scalable, fully owned by you.",
-};
+  path: "/approach",
+});
 
 const PRINCIPLES = [
   {
