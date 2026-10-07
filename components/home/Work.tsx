@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 type WorkItem = {
@@ -47,12 +48,12 @@ export default function Work() {
 
                 {it.thumb && (
                   <div className="relative h-44 overflow-hidden border-b border-[color:var(--line)] bg-[#f3f0fb]">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={it.thumb}
                       alt={it.thumbAlt ?? ""}
-                      className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
-                      loading="lazy"
+                      fill
+                      sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
+                      className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
                     />
                   </div>
                 )}

@@ -109,13 +109,14 @@ export default function Nav() {
         <button
           aria-label="Toggle menu"
           aria-expanded={mobileOpen}
-          className="md:hidden btn ghost"
+          aria-controls="mobile-menu"
+          className="nav-toggle btn ghost"
           onClick={() => setMobileOpen((s) => !s)}
         >
           {mobileOpen ? "Close" : "Menu"}
         </button>
 
-        <Link className="btn primary" href="/#contact">
+        <Link className="nav-cta btn primary" href="/#contact">
           Let&rsquo;s talk
           <span className="arrow">↗</span>
         </Link>
@@ -124,7 +125,8 @@ export default function Nav() {
       {/* Mobile menu */}
       {mobileOpen && (
         <div
-          className="md:hidden mt-3 rounded-3xl border bg-white/90 backdrop-blur p-5 max-h-[70vh] overflow-y-auto"
+          id="mobile-menu"
+          className="nav-mobile mt-3 rounded-3xl border bg-white/90 backdrop-blur p-5 max-h-[70vh] overflow-y-auto"
           style={{ borderColor: "var(--line)" }}
         >
           <MobileGroup

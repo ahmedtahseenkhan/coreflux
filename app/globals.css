@@ -39,6 +39,8 @@ body {
 ::selection { background: var(--c1); color: #fff; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; }
+/* Safari ignores list-style:none on <summary>; hide its native marker too */
+summary::-webkit-details-marker { display: none; }
 
 /* ---------- Layout helpers ---------- */
 .wrap { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
@@ -83,6 +85,8 @@ button { font: inherit; cursor: pointer; }
 .nav .links a { transition: color .2s ease; }
 .nav .links a:hover { color: var(--c1); }
 .nav .spacer { flex: 1; }
+/* Mobile menu button + panel share the breakpoint where .links hides (980px) */
+.nav .nav-toggle, .nav .nav-mobile { display: none; }
 
 /* ---------- Buttons (premium, rounded, subtle shadow) ---------- */
 .btn {
@@ -121,8 +125,6 @@ button { font: inherit; cursor: pointer; }
   0%, 100% { opacity: 1; }
   50% { opacity: 0.7; }
 }
-.hero .dots { display: none; }
-.blob-field, .blob { display: none !important; }
 .hero-inner { position: relative; z-index: 1; }
 
 /* ---------- Entrance animations ---------- */
@@ -133,26 +135,6 @@ button { font: inherit; cursor: pointer; }
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
-}
-.enter {
-  opacity: 0;
-  animation: fadeUp .85s cubic-bezier(.2,.7,.2,1) forwards;
-  animation-delay: var(--enter-delay, 0ms);
-}
-.hero-inner .eyebrow.enter { --enter-delay: 60ms; }
-.hero-inner .title.enter { --enter-delay: 180ms; }
-.hero-inner .lede.enter { --enter-delay: 320ms; }
-.hero-inner .hero-ctas.enter { --enter-delay: 440ms; }
-.hero-inner .hero-stats.enter { --enter-delay: 560ms; }
-
-/* Shimmer sweep on title accent */
-.title .shine {
-  background: linear-gradient(110deg, var(--c1) 0%, var(--c2) 35%, var(--c4) 70%, var(--c1) 100%);
-  background-size: 220% 100%;
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-style: italic;
-  animation: shine 6s linear infinite;
 }
 @keyframes shine {
   to { background-position: -220% 0; }
@@ -195,31 +177,6 @@ button { font: inherit; cursor: pointer; }
   margin: 20px 0 0;
 }
 .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
-
-/* Premium stat grid with subtle borders */
-.hero-stats {
-  margin: 40px 0 0;
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--line);
-  padding: 1px;
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-.hero-stats > div {
-  padding: 28px;
-  background: var(--bg-2);
-}
-.hero-stats .n {
-  font-family: var(--font-instrument-serif), serif;
-  font-size: 48px; line-height: 1; color: var(--c1);
-  letter-spacing: -0.02em;
-}
-.hero-stats .l {
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
-  color: var(--mute); margin-top: 8px; line-height: 1.5;
-}
 
 /* ---------- Section head (Premium) ---------- */
 .section-head {
@@ -306,12 +263,6 @@ button { font: inherit; cursor: pointer; }
   bottom: -22%; right: -4%;
   animation: orbFloat2 23s ease-in-out infinite;
 }
-.orb3 {
-  width: 440px; height: 440px;
-  background: radial-gradient(circle, #d946ef 0%, #9333ea 55%, transparent 72%);
-  top: 28%; left: 42%;
-  animation: orbFloat3 27s ease-in-out infinite;
-}
 @keyframes orbFloat1 {
   0%, 100% { transform: translate(0, 0) scale(1); }
   50% { transform: translate(140px, 90px) scale(1.22); }
@@ -319,11 +270,6 @@ button { font: inherit; cursor: pointer; }
 @keyframes orbFloat2 {
   0%, 100% { transform: translate(0, 0) scale(1); }
   50% { transform: translate(-120px, -70px) scale(1.16); }
-}
-@keyframes orbFloat3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-90px, 70px) scale(0.88); }
-  66% { transform: translate(90px, -50px) scale(1.12); }
 }
 
 /* Subtle moving grid with mouse parallax */
@@ -521,6 +467,9 @@ button { font: inherit; cursor: pointer; }
 }
 
 @media (max-width: 920px) {
+  /* Stacked content is taller than the viewport: centring would clip the
+     headline under the nav, so align to the top instead. */
+  .hero-v2 { align-items: flex-start; }
   .hero-v2-inner { grid-template-columns: 1fr; text-align: center; gap: 24px; }
   .hero-v2-sub { margin-left: auto; margin-right: auto; }
   .hero-v2-ctas { justify-content: center; }
@@ -664,13 +613,6 @@ button { font: inherit; cursor: pointer; }
 }
 .reveal.in { opacity: 1; transform: translateY(0) scale(1); }
 
-/* ---------- Card hover lift ---------- */
-.lift {
-  transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease, border-color .35s ease;
-  will-change: transform;
-}
-.lift:hover { transform: translateY(-6px); }
-
 /* ---------- Nav dropdown ---------- */
 .nav { isolation: isolate; }
 .has-mega { position: relative; }
@@ -780,16 +722,21 @@ footer ul li a:hover { color: var(--c1); }
 /* ---------- Responsive ---------- */
 @media (max-width: 980px) {
   .nav .links { display: none; }
-  .hero-stats { grid-template-columns: repeat(2, 1fr); }
-  .hero-stats > div:nth-child(2) { border-right: none; }
-  .hero-stats > div:nth-child(1), .hero-stats > div:nth-child(2) { border-bottom: 1px solid var(--line); }
+  .nav .nav-toggle { display: inline-flex; }
+  .nav .nav-mobile { display: block; }
   .section-head { grid-template-columns: 1fr; gap: 16px; }
   .foot-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 600px) {
+  /* Keep the capsule nav on one line; "Let's talk" lives in the mobile menu */
+  .nav-inner { gap: 12px; padding-left: 18px; }
+  .nav .logo { font-size: 19px; white-space: nowrap; }
+  .nav .nav-cta { display: none; }
   .foot-grid { grid-template-columns: 1fr; }
-  .hero-stats { grid-template-columns: 1fr 1fr; }
   .wrap { padding: 0 18px; }
+  /* .wrap above would otherwise wipe the home hero's top padding, sliding the
+     headline under the fixed nav */
+  .hero-v2-inner.wrap { padding: 130px 18px 90px; }
   .section { padding: 64px 0; }
 }
 
@@ -800,5 +747,5 @@ footer ul li a:hover { color: var(--c1); }
     transition-duration: .01ms !important;
     scroll-behavior: auto !important;
   }
-  .enter, .reveal { opacity: 1 !important; transform: none !important; }
+  .reveal { opacity: 1 !important; transform: none !important; }
 }

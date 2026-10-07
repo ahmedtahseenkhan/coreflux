@@ -97,7 +97,7 @@ export default function ProcessPage() {
     <>
       {/* Hero */}
       <section
-        className="relative pt-20 pb-14 border-b"
+        className="relative pt-32 pb-14 border-b"
         style={{ borderColor: "var(--line)" }}
       >
         <div className="wrap">
