@@ -17,32 +17,32 @@ export const metadata: Metadata = pageMetadata({
 const SURFACES = [
   {
     label: "Marketing sites",
-    desc: "Business websites that load fast, rank well and convert. CMS-driven where it helps, hand-coded where it matters.",
+    desc: "Business websites that load fast, rank well and convert.",
     tech: ["Next.js", "Sanity / Contentful", "Vercel", "Edge CDN"],
   },
   {
     label: "Booking platforms",
-    desc: "Public booking flows, deposits, calendars, reminders, no-show recovery. Stripe-backed, mobile-first.",
+    desc: "Public booking flows, deposits, calendars, reminders, no-show recovery.",
     tech: ["Next.js", "Stripe", "Calendars API", "Postgres"],
   },
   {
     label: "E-commerce",
-    desc: "Headless commerce on Shopify, Medusa or fully custom. Fast, indexable, with checkout you'd actually use.",
+    desc: "Headless commerce on Shopify, Medusa or fully custom.",
     tech: ["Shopify Hydrogen", "Medusa", "Stripe", "Algolia"],
   },
   {
     label: "Mobile apps",
-    desc: "React Native for iOS + Android in one codebase, or native when the use case demands it.",
+    desc: "React Native for iOS + Android in one codebase.",
     tech: ["React Native", "Expo", "iOS", "Android"],
   },
   {
     label: "Client portals",
-    desc: "Secure customer-facing surfaces — invoices, projects, files, messages — in one source of truth.",
+    desc: "Secure customer-facing surfaces — invoices, projects, files, messages.",
     tech: ["Next.js", "Auth.js", "Postgres", "S3"],
   },
   {
     label: "Admin dashboards",
-    desc: "Internal tools staff actually like using. Role-aware, fast, with the keyboard shortcuts power users need.",
+    desc: "Internal tools staff actually like using.",
     tech: ["Next.js", "tRPC", "Postgres", "Recharts"],
   },
 ];
@@ -51,37 +51,37 @@ const CAPABILITIES = [
   {
     icon: <span className="font-mono text-sm">DS</span>,
     title: "Custom design",
-    body: "No templates, no theme marketplace. Every surface is designed from the brand up — typography, spacing, interaction states, dark mode if you need it.",
+    body: "No templates, no theme marketplace. Every surface is designed from the brand up.",
     bullets: ["Brand-up design", "Design system", "Interaction states", "Accessibility"],
   },
   {
     icon: <span className="font-mono text-sm">PF</span>,
     title: "Performance-first build",
-    body: "Core Web Vitals matter for SEO and UX. We optimise for real users, not just Lighthouse scores.",
+    body: "We optimise for real users, not just Lighthouse scores.",
     bullets: ["Edge rendering", "Image optimisation", "Code splitting", "Prefetching"],
   },
   {
     icon: <span className="font-mono text-sm">A1</span>,
     title: "Accessibility",
-    body: "WCAG AA by default. Keyboard navigation, screen-reader semantics, focus management — built in, not bolted on.",
+    body: "WCAG AA by default — built in, not bolted on.",
     bullets: ["WCAG AA", "Keyboard nav", "Screen readers", "Colour contrast"],
   },
   {
     icon: <span className="font-mono text-sm">CX</span>,
     title: "CMS integration",
-    body: "Headless CMS for content your team can edit without a developer. We pick the one that fits how you actually work.",
+    body: "Headless CMS for content your team can edit without a developer.",
     bullets: ["Sanity", "Contentful", "Payload", "Structured content"],
   },
   {
     icon: <span className="font-mono text-sm">MB</span>,
     title: "Mobile apps",
-    body: "React Native for one shared codebase across iOS and Android. Native modules where performance demands it.",
+    body: "React Native for one shared codebase across iOS and Android.",
     bullets: ["React Native / Expo", "iOS + Android", "Push notifications", "Offline support"],
   },
   {
     icon: <span className="font-mono text-sm">AN</span>,
     title: "Analytics & conversion",
-    body: "Instrumented from launch day — funnel visibility, real-user monitoring, A/B testing without re-deploys.",
+    body: "Instrumented from launch day — funnel visibility, real-user monitoring, A/B testing.",
     bullets: ["Posthog / GA4", "RUM", "A/B framework", "Heatmaps"],
   },
 ];
@@ -169,10 +169,8 @@ export default function WebAppsPage() {
         title={<>Web &amp; apps that <em>look</em> as good as they perform.</>}
         lede={
           <>
-            Business websites, booking platforms, e-commerce, mobile apps,
-            client portals and admin dashboards. Custom design and custom code
-            — no templates, no theme slop — built to be fast, accessible and
-            on-brand from day one.
+            Websites, booking platforms, e-commerce, mobile apps and dashboards
+            &mdash; custom design and code, built to be fast and accessible.
           </>
         }
         ctas={[
@@ -195,9 +193,8 @@ export default function WebAppsPage() {
             title={<>Every surface your business <em>touches</em> customers on.</>}
             blurb={
               <>
-                We build across the full stack of user-facing surfaces — from
-                the marketing site a prospect finds first to the admin dashboard
-                your ops team lives in every day.
+                From the marketing site a prospect finds first to the admin
+                dashboard your ops team lives in every day.
               </>
             }
           />
@@ -273,7 +270,7 @@ export default function WebAppsPage() {
                 </h3>
                 <p className="mt-3 text-[14.5px] text-white/65 max-w-[50ch]">
                   We use the same stack across projects so we know its failure
-                  modes. Custom layers sit on top — not underneath.
+                  modes.
                 </p>
               </div>
               <Link href="/#contact" className="btn shrink-0" style={{ background: "white", color: "var(--ink)" }}>
@@ -320,9 +317,9 @@ export default function WebAppsPage() {
           >
             {[
               { n: "100", u: "Lighthouse", d: "Performance, accessibility and SEO scores on every deploy." },
-              { n: "AA", u: "WCAG", d: "Keyboard, screen-reader and colour-contrast compliance built in from day one." },
-              { n: "<1s", u: "LCP target", d: "Largest Contentful Paint under 1 second on a fast connection. Real users notice." },
-              { n: "0", u: "Vendor lock-in", d: "Your repo, your domain, your accounts. Switch hosts or teams without asking us." },
+              { n: "AA", u: "WCAG", d: "Keyboard, screen-reader and colour-contrast compliance." },
+              { n: "<1s", u: "LCP target", d: "Largest Contentful Paint under 1 second on a fast connection." },
+              { n: "0", u: "Vendor lock-in", d: "Your repo, your domain, your accounts." },
             ].map((s, i, arr) => (
               <div
                 key={s.u}

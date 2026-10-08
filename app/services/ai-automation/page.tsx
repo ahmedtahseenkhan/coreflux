@@ -19,42 +19,42 @@ const CAPABILITIES = [
     icon: <span className="font-mono text-sm">CB</span>,
     title: "AI chatbots",
     body:
-      "Customer-facing or internal — trained on your docs, your tone, your product. With escalation rules that respect users.",
+      "Customer-facing or internal — trained on your docs, your tone, your product.",
     bullets: ["RAG over your docs", "Tone-of-voice tuning", "Hand-off rules", "Multi-language"],
   },
   {
     icon: <span className="font-mono text-sm">WF</span>,
     title: "Workflow automation",
     body:
-      "AI inside the workflow, not bolted onto it. Triage, summarise, classify, route — humans approve consequential calls.",
+      "Triage, summarise, classify, route — humans approve consequential calls.",
     bullets: ["Triage / routing", "Summarisation", "Classification", "Approval gates"],
   },
   {
     icon: <span className="font-mono text-sm">KA</span>,
     title: "Knowledge assistants",
     body:
-      "RAG over docs, runbooks, Slack and tickets. Your new hire's first colleague is the org's institutional memory.",
+      "RAG over docs, runbooks, Slack and tickets.",
     bullets: ["Doc + Slack + tickets", "Source citations", "Permission-aware", "Continuous reindex"],
   },
   {
     icon: <span className="font-mono text-sm">SA</span>,
     title: "Support automation",
     body:
-      "Suggested replies in your agent UI, auto-classification, and clean hand-off when confidence drops below threshold.",
+      "Suggested replies, auto-classification and clean hand-off when confidence drops.",
     bullets: ["Suggested replies", "Auto-tagging", "Confidence gating", "Feedback loop"],
   },
   {
     icon: <span className="font-mono text-sm">DP</span>,
     title: "Document processing",
     body:
-      "Extract structured data from invoices, contracts, forms or PDFs. With confidence scores and review queues.",
+      "Extract structured data from invoices, contracts, forms or PDFs.",
     bullets: ["OCR + LLM extract", "Schema-validated output", "Review queue", "Audit log"],
   },
   {
     icon: <span className="font-mono text-sm">RA</span>,
     title: "Reporting automation",
     body:
-      "Weekly business summaries, anomaly alerts and natural-language Q&A over your real data — not stitched dashboards.",
+      "Weekly business summaries, anomaly alerts and natural-language Q&A over your real data.",
     bullets: ["Weekly briefs", "Anomaly alerts", "NL → SQL", "Trust scores"],
   },
 ];
@@ -63,22 +63,22 @@ const TRUST = [
   {
     k: "Privacy",
     t: "Your data, your infrastructure",
-    b: "We deploy to your cloud or ours-on-your-account. No model provider sees what they shouldn't.",
+    b: "We deploy to your cloud or ours-on-your-account.",
   },
   {
     k: "Evals",
     t: "We run them. We share them.",
-    b: "Every release ships with a real eval suite — accuracy, hallucination rate, refusal rate — and you see the numbers.",
+    b: "Every release ships with a real eval suite, and you see the numbers.",
   },
   {
     k: "Human-in-loop",
     t: "Default for consequential calls",
-    b: "AI proposes. Humans approve when stakes are real. Confidence gates are explicit, not hidden.",
+    b: "AI proposes. Humans approve when stakes are real.",
   },
   {
     k: "Auditability",
     t: "Every decision, traceable",
-    b: "Input, prompt version, model, output, latency, cost — all logged. You can reconstruct any answer.",
+    b: "Everything is logged. You can reconstruct any answer.",
   },
 ];
 
@@ -159,10 +159,9 @@ export default function AIAutomationPage() {
         title={<>AI that does <em>real</em> work. Not demos.</>}
         lede={
           <>
-            Chatbots, workflow tools, internal knowledge assistants, support
-            automation, document processing and reporting automation. We build
-            for the workflow your team runs Tuesday morning &mdash; not the
-            keynote stage.
+            Chatbots, knowledge assistants, support and document automation
+            &mdash; built for the workflow your team runs Tuesday morning, not
+            the keynote stage.
           </>
         }
         ctas={[
@@ -186,8 +185,7 @@ export default function AIAutomationPage() {
             blurb={
               <>
                 Every workflow we ship has the same shape — input, model step,
-                confidence gate, human review when stakes are real, action.
-                Visible, traceable, debuggable.
+                confidence gate, human review, action.
               </>
             }
           />
@@ -227,7 +225,7 @@ export default function AIAutomationPage() {
             >
               <p className="text-[13.5px] text-[color:var(--ink-2)]">
                 Every step is logged: input, prompt version, model, output,
-                latency, cost. Reproducible answers, debuggable failures.
+                latency, cost.
               </p>
               <div className="flex flex-wrap gap-2 md:justify-end">
                 {["Claude Sonnet 4.6", "GPT-4o", "Llama 3.1", "Mistral", "Open-weights"].map((m) => (
@@ -267,9 +265,8 @@ export default function AIAutomationPage() {
             title={<>The bits that make this <em>safe</em> to ship.</>}
             blurb={
               <>
-                AI that ships to real users needs more than a clever prompt.
-                These are the four properties we build in from day one &mdash;
-                not after the first incident.
+                Four properties we build in from day one &mdash; not after the
+                first incident.
               </>
             }
           />
@@ -307,9 +304,7 @@ export default function AIAutomationPage() {
               <strong className="text-[color:var(--ink)]">
                 Already running an AI feature that&rsquo;s drifting?
               </strong>{" "}
-              We also do focused eval-and-harden engagements &mdash; bring us a
-              system, we&rsquo;ll bring you a real failure-mode report and a
-              plan to fix it.{" "}
+              We also do focused eval-and-harden engagements.{" "}
               <Link
                 href="/#contact"
                 className="text-[color:var(--ink)] underline decoration-[color:var(--c1)] underline-offset-4"

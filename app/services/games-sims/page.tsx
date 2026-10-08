@@ -18,37 +18,37 @@ const CAPABILITIES = [
   {
     icon: <span className="font-mono text-sm">MG</span>,
     title: "Mobile games",
-    body: "Casual or session-driven titles with retention loops, in-app economies and store submission handled. iOS + Android.",
+    body: "Casual or session-driven titles with retention loops and store submission handled.",
     bullets: ["React Native / Unity", "Retention loops", "In-app economy", "Store submission"],
   },
   {
     icon: <span className="font-mono text-sm">WG</span>,
     title: "Web games",
-    body: "Instant-load games that run in any browser. No app-store friction — share a link, play. PixiJS for 2D, Three.js for 3D.",
+    body: "Instant-load games that run in any browser — share a link, play.",
     bullets: ["PixiJS / Three.js", "No install", "Instant load", "Social sharing"],
   },
   {
     icon: <span className="font-mono text-sm">EG</span>,
     title: "Educational games",
-    body: "Curriculum-aligned interactive experiences for schools, edtech platforms or corporate training. Learning outcomes built into the design.",
+    body: "Curriculum-aligned experiences with learning outcomes built into the design.",
     bullets: ["Learning outcomes", "Curriculum mapping", "Progress tracking", "Teacher dashboard"],
   },
   {
     icon: <span className="font-mono text-sm">TS</span>,
     title: "Training simulations",
-    body: "Branching scenarios, consequence-driven decision trees and scoring for compliance, onboarding or skills development.",
+    body: "Branching scenarios and scoring for compliance, onboarding or skills development.",
     bullets: ["Branching scenarios", "Consequence trees", "Scoring + leaderboard", "Certificate link"],
   },
   {
     icon: <span className="font-mono text-sm">GA</span>,
     title: "Gamified apps",
-    body: "Points, streaks, levels and social leaderboards inside otherwise-serious software — used surgically to drive behaviour change.",
+    body: "Points, streaks, levels and leaderboards inside otherwise-serious software.",
     bullets: ["Points + streaks", "Leaderboards", "Achievement system", "Push nudges"],
   },
   {
     icon: <span className="font-mono text-sm">AN</span>,
     title: "Analytics & balance",
-    body: "Every game ships with telemetry — funnels, retention, balance metrics. You tune from data, not gut.",
+    body: "Every game ships with telemetry. You tune from data, not gut.",
     bullets: ["Session funnels", "Retention curves", "Balance telemetry", "A/B scenarios"],
   },
 ];
@@ -147,10 +147,8 @@ export default function GamesSimsPage() {
         title={<>Games that <em>actually</em> move the metric.</>}
         lede={
           <>
-            Mobile games, web games, educational games, training simulations and
-            gamified apps — built with the same engineering discipline as our
-            serious software, pointed at engagement. Measurable outcomes, not
-            vanity metrics.
+            Mobile, web and educational games, training simulations and
+            gamified apps &mdash; measurable outcomes, not vanity metrics.
           </>
         }
         ctas={[
@@ -173,9 +171,7 @@ export default function GamesSimsPage() {
             title={<>Fun is a strategy. <em>Metrics</em> are the proof.</>}
             blurb={
               <>
-                Every game we ship is instrumented from day one. Completion,
-                retention, session length, scenario success rates — we build
-                the telemetry alongside the game, not after.
+                Every game we ship is instrumented from day one.
               </>
             }
           />
@@ -248,9 +244,8 @@ export default function GamesSimsPage() {
             title={<>Six industries. Same <em>toolkit</em>.</>}
             blurb={
               <>
-                Game design principles transfer. Whether the player is a new
-                hire, a sales rep or a child learning maths, the mechanics of
-                progress, feedback and reward work the same way.
+                Game design principles transfer: progress, feedback and reward
+                work the same way.
               </>
             }
           />
@@ -322,10 +317,8 @@ export default function GamesSimsPage() {
               — and people remember conversations.
             </p>
             <p className="mt-5 text-[15px] leading-relaxed text-[color:var(--ink-2)] max-w-[60ch]">
-              The same engineering toolkit that builds an ERP or a booking
-              platform can build a branching scenario or a retention loop.
-              We just point it at engagement instead of operations &mdash; and
-              we measure whether it worked.
+              The same toolkit that builds an ERP can build a branching
+              scenario &mdash; and we measure whether it worked.
             </p>
             <Link href="/#contact" className="btn primary mt-8 inline-flex">
               Tell us what you&rsquo;re trying to change <span className="arrow">↗</span>

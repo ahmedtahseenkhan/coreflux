@@ -26,27 +26,27 @@ const PHASES = [
   {
     n: "01",
     t: "Assessment",
-    b: "We open every source, count the rows, find the weird records and write the migration plan. Nothing happens to your data yet.",
+    b: "We open every source, count the rows and write the migration plan.",
   },
   {
     n: "02",
     t: "Mapping",
-    b: "Field-by-field mapping from your sources to a clean target schema. Identity resolution rules locked in writing.",
+    b: "Field-by-field mapping to a clean target schema.",
   },
   {
     n: "03",
     t: "Dry run",
-    b: "We migrate to a parallel environment, run validation, share a reconciliation report. You verify before anything goes live.",
+    b: "We migrate to a parallel environment. You verify before anything goes live.",
   },
   {
     n: "04",
     t: "Cut-over",
-    b: "Dual-write window or scheduled cut-over depending on risk. Your team keeps working; we move history in the background.",
+    b: "Your team keeps working; we move history in the background.",
   },
   {
     n: "05",
     t: "Reconciliation",
-    b: "Row-for-row counts, checksums, sampled audits. Every record is accounted for and the proof is in writing.",
+    b: "Every record is accounted for and the proof is in writing.",
   },
 ];
 
@@ -55,42 +55,42 @@ const CAPABILITIES = [
     icon: <span className="font-mono text-sm">XL</span>,
     title: "Spreadsheets → real schema",
     body:
-      "Years of Excel into a properly modelled, indexed Postgres database. With audit trails, backups and dignity.",
+      "Years of Excel into a properly modelled, indexed Postgres database.",
     bullets: ["Schema design", "Indexing", "Audit log", "Backups + PITR"],
   },
   {
     icon: <span className="font-mono text-sm">ID</span>,
     title: "Identity resolution",
     body:
-      "Dedupe at the identity level, not by name. Survives renames, mergers, typo-grade duplicates.",
+      "Dedupe at the identity level, not by name.",
     bullets: ["Fuzzy match", "Manual review queue", "Merge history", "Survivorship rules"],
   },
   {
     icon: <span className="font-mono text-sm">HX</span>,
     title: "History preservation",
     body:
-      "Activity history, notes and attachments follow the resolved record — not lost in the merge.",
+      "Activity history, notes and attachments follow the resolved record.",
     bullets: ["Full activity feed", "Attachments", "Note threads", "Source references"],
   },
   {
     icon: <span className="font-mono text-sm">VA</span>,
     title: "Validation & reconciliation",
     body:
-      "Row counts, checksums and sampled audits prove every record arrived. We share the report.",
+      "Row counts, checksums and sampled audits prove every record arrived.",
     bullets: ["Row counts", "Checksums", "Sampled audit", "Discrepancy log"],
   },
   {
     icon: <span className="font-mono text-sm">RB</span>,
     title: "Reversible cut-over",
     body:
-      "Dual-write windows, dry runs and a tested rollback plan. Your business doesn't stop for a weekend.",
+      "Dual-write windows, dry runs and a tested rollback plan.",
     bullets: ["Dual-write window", "Tested rollback", "Zero-downtime option", "Phased cut-over"],
   },
   {
     icon: <span className="font-mono text-sm">DC</span>,
     title: "Documentation",
     body:
-      "The new schema, the mapping rules, the migration log — handed over in writing your team will actually read.",
+      "The new schema, mapping rules and migration log — handed over in writing.",
     bullets: ["Schema docs", "Mapping rules", "Runbook", "Lineage map"],
   },
 ];
@@ -172,9 +172,8 @@ export default function DataMigrationPage() {
         title={<>Move the data. <em>Keep</em> the history.</>}
         lede={
           <>
-            From Excel, old CRMs, legacy databases, paper or manual systems and
-            disconnected tools into clean, modern systems &mdash; without
-            losing history, context or the reports you already rely on.
+            From Excel, old CRMs, legacy databases and paper into clean, modern
+            systems &mdash; without losing history.
           </>
         }
         ctas={[
@@ -197,8 +196,8 @@ export default function DataMigrationPage() {
             title={<>Five kinds of mess. <em>One</em> clean destination.</>}
             blurb={
               <>
-                Most projects pull from 3–5 sources at once. We reconcile them
-                into a single canonical model before they hit your new system.
+                Most projects pull from 3–5 sources. We reconcile them into a
+                single canonical model.
               </>
             }
           />
