@@ -81,12 +81,6 @@ export default function Footer() {
             <Link href="/terms">Terms</Link>
             <CookieSettingsButton />
           </nav>
-          <div className="foot-credit">
-            Built in-house · v1.0 · Components by{" "}
-            <a href="https://skiper-ui.com" target="_blank" rel="noopener noreferrer">
-              Skiper UI
-            </a>
-          </div>
         </div>
       </div>
     </footer>

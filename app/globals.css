@@ -743,7 +743,7 @@ footer ul li a:hover { color: var(--c1); }
 }
 .foot-legal a:hover, .foot-legal button:hover { color: var(--c1); }
 
-/* ================= Skiper UI-derived effects (credited in footer) ================= */
+/* ================= Animated effects (see components/skiper/) ================= */
 
 /* Text roll (skiper58): letters slide up, a copy rides in from below via text-shadow */
 .text-roll {
@@ -760,14 +760,14 @@ footer ul li a:hover { color: var(--c1); }
 .mega-trigger[data-open="true"] .text-roll-inner > span { transform: translateY(-1.3em); }
 
 /* Draw-in underline (skiper40 Link000) */
-footer :is(ul a, .foot-legal a, .foot-legal button, .foot-credit a) { position: relative; }
-footer :is(ul a, .foot-legal a, .foot-legal button, .foot-credit a)::after {
+footer :is(ul a, .foot-legal a, .foot-legal button) { position: relative; }
+footer :is(ul a, .foot-legal a, .foot-legal button)::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 1px;
   background: currentColor;
   transform: scaleX(0); transform-origin: right;
   transition: transform .3s cubic-bezier(.4, 0, .2, 1);
 }
-footer :is(ul a, .foot-legal a, .foot-legal button, .foot-credit a):is(:hover, :focus-visible)::after {
+footer :is(ul a, .foot-legal a, .foot-legal button):is(:hover, :focus-visible)::after {
   transform: scaleX(1); transform-origin: left;
 }
 
