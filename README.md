@@ -44,6 +44,11 @@ Also generated: `/sitemap.xml`, `/robots.txt`, `/manifest.webmanifest`, icons
 - **New service pages:** copy `app/services/erp/page.tsx` — `PageHero` +
   `SectionHead` + `CapabilityGrid` + custom sections + `FAQ` + `CTA`. `FAQ`
   emits FAQPage structured data automatically.
+- **Animated components:** `components/skiper/` holds effects adapted from the
+  free [Skiper UI](https://skiper-ui.com) set (sticky stacked cards, hover-expand
+  panels, text roll). The free license requires the "Components by Skiper UI"
+  credit in the footer — keep it unless you move to Skiper UI Pro. Card colours
+  for stacks cycle through `lib/tones.ts`.
 - **Analytics:** set `NEXT_PUBLIC_GA_MEASUREMENT_ID` at build time. GA4 only
   loads after cookie consent (`components/Analytics.tsx`); send events with
   `trackEvent()` from `lib/analytics.ts`.

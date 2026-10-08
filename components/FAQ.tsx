@@ -60,7 +60,6 @@ export default function FAQ({
           {items.map((it, i) => (
             <details
               key={i}
-              open={i === 0}
               className="group reveal"
               style={{ borderColor: "var(--line)" }}
             >

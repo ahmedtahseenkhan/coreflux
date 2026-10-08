@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/site";
 import Link from "next/link";
 import CTA from "@/components/home/CTA";
+import StickyStack from "@/components/skiper/StickyStack";
+import { tone } from "@/lib/tones";
 
 export const metadata: Metadata = pageMetadata({
   title: "Approach",
@@ -15,117 +17,37 @@ const PRINCIPLES = [
     n: "01",
     title: "Ship working software, not documents.",
     pull: "Every milestone is something your team can actually use.",
-    body: (
-      <>
-        <p>
-          Documents, diagrams and slide decks have their place — they support
-          the build. They don&rsquo;t replace it. We measure progress by
-          working software in your hands, not by artefacts in a Notion page
-          that nobody opens after the kickoff meeting.
-        </p>
-        <p>
-          The consequence of this is that your team uses real software from
-          week three, not month six. Reality lands early. Problems are cheap to
-          fix, not expensive to discover.
-        </p>
-      </>
-    ),
+    body: "We measure progress by working software in your hands — your team uses real software from week three, not month six.",
   },
   {
     n: "02",
     title: "Build to your data model, not ours.",
     pull: "Your products, your customers, your workflow — modelled exactly.",
-    body: (
-      <>
-        <p>
-          Off-the-shelf platforms are built for the average customer. You pay a
-          per-seat license for features you&rsquo;ll never use, and you reshape
-          your operations to fit their schema instead of the other way around.
-        </p>
-        <p>
-          Custom means we start from your data — what you sell, who you serve,
-          how money moves — and build outward. The schema reflects reality.
-          The UI reflects how your team works, not how an enterprise product
-          manager imagined a generalist might work.
-        </p>
-      </>
-    ),
+    body: "Custom means we start from your data — what you sell, who you serve, how money moves — and build outward.",
   },
   {
     n: "03",
     title: "One small team, end to end.",
     pull: "No handoffs between strategy, design, engineering and data.",
-    body: (
-      <>
-        <p>
-          The people who design the system are the people who build it, and the
-          people who talked to you about the problem. There is no brief that
-          travels from a strategy consultant to an offshore development team.
-        </p>
-        <p>
-          This matters because context lives in people. The engineering decision
-          made in week four should be informed by the conversation we had in
-          week one. On a small team, it is. On a large agency, it usually isn&rsquo;t.
-        </p>
-      </>
-    ),
+    body: "The people who design the system are the people who build it, and the people who talked to you about the problem.",
   },
   {
     n: "04",
     title: "Fix the cost. Show the work.",
     pull: "A fixed scope and price before you commit to anything.",
-    body: (
-      <>
-        <p>
-          We don&rsquo;t run hourly retainers that meter by the ticket. Every
-          engagement starts with a blueprint: what we build, what it costs,
-          what success looks like, and when each piece ships. That document is
-          a commitment, not an estimate.
-        </p>
-        <p>
-          When scope changes — it always does — we renegotiate the blueprint,
-          not the invoice. Surprises are for birthdays, not software budgets.
-        </p>
-      </>
-    ),
+    body: "When scope changes — it always does — we renegotiate the blueprint, not the invoice.",
   },
   {
     n: "05",
     title: "You own everything, no exceptions.",
     pull: "Code, data, infrastructure and accounts — all in your name.",
-    body: (
-      <>
-        <p>
-          Your GitHub repository. Your AWS or Cloudflare account. Your domain
-          registrar. Your database backups. We set everything up in your name
-          from day one, hand it over on launch day, and have no leverage over
-          your ability to run or modify the system after we&rsquo;re done.
-        </p>
-        <p>
-          No per-seat license that triples when you hire. No migration fee when
-          you want to move hosts. No &ldquo;you need us&rdquo; unless you want us.
-        </p>
-      </>
-    ),
+    body: "We set everything up in your name from day one and hand it over on launch day.",
   },
   {
     n: "06",
     title: "Write decisions down.",
     pull: "If it matters, it lives in writing. No verbal commitments.",
-    body: (
-      <>
-        <p>
-          Scope in a doc. Architecture decisions in a doc. Reasoning behind a
-          tradeoff — in a doc. This isn&rsquo;t bureaucracy; it&rsquo;s the
-          practice that stops the same argument from happening twice.
-        </p>
-        <p>
-          When the engineer who built a system leaves, the reasoning should be
-          findable. When a client asks why a decision was made six months ago,
-          the answer shouldn&rsquo;t be &ldquo;I think we talked about it on a call.&rdquo;
-        </p>
-      </>
-    ),
+    body: "Scope, architecture decisions and the reasoning behind a tradeoff — in a doc, so the same argument doesn't happen twice.",
   },
 ];
 
@@ -164,9 +86,7 @@ export default function ApproachPage() {
               <p
                 className="font-serif text-[22px] leading-relaxed text-[color:var(--ink-2)] max-w-[36ch]"
               >
-                Six principles we hold to across every engagement. Not rules
-                imposed from outside — the things we&rsquo;ve learned actually
-                matter from building real systems for real teams.
+                Six principles we hold to across every engagement.
               </p>
               <div className="mt-8 flex gap-3 flex-wrap">
                 <Link href="/#contact" className="btn primary">
@@ -207,43 +127,43 @@ export default function ApproachPage() {
         </div>
       </section>
 
-      {/* Manifesto — numbered principles */}
+      {/* Principles — sticky stacked cards */}
       <section className="section">
         <div className="wrap">
-          <div className="space-y-0 divide-y" style={{ borderColor: "var(--line)" }}>
-            {PRINCIPLES.map((p, i) => (
-              <article
-                key={p.n}
-                className="reveal grid gap-8 py-14 md:grid-cols-[80px_1.1fr_1.3fr]"
-                style={{ transitionDelay: `${i * 60}ms` }}
-              >
-                {/* Number */}
-                <div className="font-serif text-[64px] leading-none text-[color:var(--line)] select-none" aria-hidden>
-                  {p.n}
-                </div>
-
-                {/* Title + pull */}
-                <div>
-                  <h2 className="font-serif text-[30px] md:text-[36px] leading-tight text-[color:var(--ink)] tracking-tight max-w-[20ch]">
-                    {p.title}
-                  </h2>
-                  <p
-                    className="mt-4 font-serif italic text-[20px] leading-snug max-w-[28ch]"
-                    style={{ color: "var(--c1)" }}
-                  >
-                    &ldquo;{p.pull}&rdquo;
-                  </p>
-                </div>
-
-                {/* Body */}
-                <div
-                  className="space-y-4 text-[15.5px] leading-relaxed text-[color:var(--ink-2)]"
+          <StickyStack>
+            {PRINCIPLES.map((p, i) => {
+              const t = tone(i);
+              return (
+                <article
+                  key={p.n}
+                  className="grid min-h-[300px] gap-6 rounded-[28px] border p-8 shadow-lg md:grid-cols-[96px_1.1fr_1fr] md:items-center md:gap-10 md:p-12"
+                  style={{ background: t.bg, borderColor: t.border, color: t.fg }}
                 >
-                  {p.body}
-                </div>
-              </article>
-            ))}
-          </div>
+                  <div
+                    className="font-serif text-[56px] leading-none md:text-[72px]"
+                    style={{ color: t.accent }}
+                    aria-hidden
+                  >
+                    {p.n}
+                  </div>
+                  <div>
+                    <h2 className="font-serif text-[32px] leading-[1.05] tracking-tight md:text-[44px]">
+                      {p.title}
+                    </h2>
+                    <p
+                      className="mt-4 font-serif text-[20px] italic leading-snug"
+                      style={{ color: t.accent }}
+                    >
+                      &ldquo;{p.pull}&rdquo;
+                    </p>
+                  </div>
+                  <p className="text-[16px] leading-relaxed" style={{ color: t.sub }}>
+                    {p.body}
+                  </p>
+                </article>
+              );
+            })}
+          </StickyStack>
         </div>
       </section>
 
@@ -266,9 +186,7 @@ export default function ApproachPage() {
             </p>
             <p className="mt-5 text-[15px] leading-relaxed text-[color:var(--ink-2)] max-w-[56ch]">
               The best way to test that claim is a discovery call — a
-              working session, not a pitch. You describe the problem,
-              we describe what we&rsquo;d build, and you decide whether it
-              sounds like the way you want to work.
+              working session, not a pitch.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/#contact" className="btn primary">

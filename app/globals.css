@@ -743,10 +743,129 @@ footer ul li a:hover { color: var(--c1); }
 }
 .foot-legal a:hover, .foot-legal button:hover { color: var(--c1); }
 
+/* ================= Skiper UI-derived effects (credited in footer) ================= */
+
+/* Text roll (skiper58): letters slide up, a copy rides in from below via text-shadow */
+.text-roll {
+  display: inline-block; overflow: hidden;
+  height: 1.3em; line-height: 1.3em; vertical-align: bottom;
+}
+.text-roll-inner > span {
+  display: inline-block;
+  text-shadow: 0 1.3em currentColor;
+  transition: transform .45s cubic-bezier(.65, 0, .35, 1);
+  transition-delay: calc(var(--i) * 18ms);
+}
+:is(a, button):is(:hover, :focus-visible) .text-roll-inner > span,
+.mega-trigger[data-open="true"] .text-roll-inner > span { transform: translateY(-1.3em); }
+
+/* Draw-in underline (skiper40 Link000) */
+footer :is(ul a, .foot-legal a, .foot-legal button, .foot-credit a) { position: relative; }
+footer :is(ul a, .foot-legal a, .foot-legal button, .foot-credit a)::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 1px;
+  background: currentColor;
+  transform: scaleX(0); transform-origin: right;
+  transition: transform .3s cubic-bezier(.4, 0, .2, 1);
+}
+footer :is(ul a, .foot-legal a, .foot-legal button, .foot-credit a):is(:hover, :focus-visible)::after {
+  transform: scaleX(1); transform-origin: left;
+}
+
+/* Progressive blur under the floating nav (skiper41), shown once scrolled */
+.nav-blur {
+  position: fixed; top: 0; left: 0; right: 0; height: 112px; z-index: 55;
+  pointer-events: none;
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent);
+  mask-image: linear-gradient(to bottom, #000 35%, transparent);
+  opacity: 0; transition: opacity .3s ease;
+}
+.nav-blur[data-on="true"] { opacity: 1; }
+
+/* Menu icon morph, hamburger -> cross (skiper99 MenuIcon) */
+.menu-icon { position: relative; display: inline-block; width: 18px; height: 12px; }
+.menu-icon > span {
+  position: absolute; left: 0; right: 0; height: 2px; border-radius: 2px;
+  background: currentColor;
+  transition: transform .3s cubic-bezier(.4, 0, .2, 1), opacity .15s ease;
+}
+.menu-icon > span:nth-child(1) { top: 0; }
+.menu-icon > span:nth-child(2) { top: 5px; }
+.menu-icon > span:nth-child(3) { top: 10px; }
+.menu-icon[data-open="true"] > span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+.menu-icon[data-open="true"] > span:nth-child(2) { opacity: 0; }
+.menu-icon[data-open="true"] > span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
+
+/* Hover-expand service panels (skiper52 / skiper53) */
+.hx { display: flex; flex-direction: column; gap: 8px; --focus: #E9D5FF; }
+.hx-panel {
+  position: relative; overflow: hidden; min-width: 0; flex: 0 0 auto;
+  display: flex; flex-direction: column;
+  border-radius: 20px; color: #fff;
+  background: var(--ink);
+  transition: background-color .4s ease;
+}
+.hx-panel::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(120% 90% at 0% 0%, #5b21b6 0%, transparent 55%),
+              linear-gradient(135deg, #3b0764 0%, #6d28d9 52%, #7c3aed 100%);
+  opacity: 0; transition: opacity .45s ease;
+}
+.hx-panel[data-active="true"]::before { opacity: 1; }
+.hx-head { position: relative; margin: 0; }
+.hx-head button {
+  display: flex; align-items: center; gap: 14px; width: 100%;
+  padding: 20px 22px; background: none; border: 0; color: inherit; text-align: left;
+}
+.hx-num { font-family: var(--font-geist-mono), monospace; font-size: 12px; letter-spacing: .12em; color: #E9D5FF; }
+.hx-title { font-family: var(--font-instrument-serif), serif; font-size: 26px; line-height: 1.1; letter-spacing: -.01em; }
+.hx-title-v { display: none; }
+.hx-body { position: relative; overflow: hidden; }
+.hx-body-inner { padding: 0 22px 24px; }
+.hx-tag {
+  display: inline-block; font-family: var(--font-geist-mono), monospace;
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: #E9D5FF; padding: 4px 10px; border-radius: 999px;
+  border: 1px solid rgba(233, 213, 255, .35);
+}
+.hx-desc { margin: 14px 0 0; font-size: 16px; line-height: 1.5; color: rgba(255, 255, 255, .9); max-width: 34ch; }
+.hx-chips { list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.hx-chips li {
+  font-family: var(--font-geist-mono), monospace; font-size: 12px;
+  padding: 6px 12px; border-radius: 999px;
+  background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .18);
+}
+.hx-link {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 22px;
+  font-size: 14px; font-weight: 600; color: #fff;
+  padding: 10px 16px; border-radius: var(--radius);
+  background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .28);
+  transition: background .2s ease, gap .2s ease;
+}
+.hx-link:hover { background: rgba(255, 255, 255, .24); gap: 12px; }
+@media (min-width: 1024px) {
+  .hx { flex-direction: row; height: 440px; }
+  .hx-panel { flex: 1 1 0; }
+  .hx-head button { flex-direction: column; align-items: flex-start; gap: 18px; padding: 26px; }
+  .hx-panel[data-active="false"] .hx-head { flex: 1; }
+  .hx-panel[data-active="false"] .hx-head button { height: 100%; }
+  .hx-panel[data-active="false"] .hx-title { display: none; }
+  .hx-panel[data-active="false"] .hx-title-v {
+    display: block; margin-top: auto;
+    writing-mode: vertical-rl; transform: rotate(180deg);
+    font-size: 17px; font-weight: 600; letter-spacing: -.01em; white-space: nowrap;
+    color: rgba(255, 255, 255, .85);
+  }
+  .hx-panel[data-active="true"] .hx-title { font-size: 40px; }
+  .hx-panel[data-active="true"] .hx-body { margin-top: auto; }
+  /* Fixed inner width so text doesn't reflow while the panel animates open */
+  .hx-body-inner { width: 460px; padding: 0 26px 28px; }
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 980px) {
   .nav .links { display: none; }
-  .nav .nav-toggle { display: inline-flex; }
+  .nav .nav-toggle { display: inline-flex; padding: 13px 14px; }
   .nav .nav-mobile { display: block; }
   .section-head { grid-template-columns: 1fr; gap: 16px; }
   .foot-grid { grid-template-columns: 1fr 1fr; }
@@ -772,4 +891,5 @@ footer ul li a:hover { color: var(--c1); }
     scroll-behavior: auto !important;
   }
   .reveal { opacity: 1 !important; transform: none !important; }
+  .text-roll-inner > span { transform: none !important; }
 }
