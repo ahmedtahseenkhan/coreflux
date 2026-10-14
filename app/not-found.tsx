@@ -1,8 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = { title: "Page not found" };
 
 export default function NotFound() {
   return (
-    <section className="section">
+    <section className="section" style={{ paddingTop: 160 }}>
       <div className="wrap max-w-[640px]">
         <span className="kicker">404</span>
         <h1 className="title" style={{ fontSize: "clamp(48px,7vw,80px)" }}>

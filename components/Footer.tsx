@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { SOCIAL_LINKS } from "@/lib/site";
+import { CookieSettingsButton } from "@/components/Analytics";
 
 const SERVICES = [
   { href: "/services/erp", label: "ERP Solutions" },
@@ -26,7 +28,7 @@ export default function Footer() {
             <Link href="/" className="wordmark">
               Coreflux Solutions<span className="dot" />
             </Link>
-            <h6>Practical software for serious businesses.</h6>
+            <p className="tagline">Practical software for serious businesses.</p>
             <p>
               A Houston-based studio building custom ERP, LMS, AI, data, web,
               app and gaming solutions for teams that have outgrown
@@ -34,7 +36,7 @@ export default function Footer() {
             </p>
           </div>
           <div>
-            <h5>Services</h5>
+            <h2>Services</h2>
             <ul>
               {SERVICES.map((s) => (
                 <li key={s.href}>
@@ -44,7 +46,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h5>Studio</h5>
+            <h2>Studio</h2>
             <ul>
               {STUDIO.map((s) => (
                 <li key={s.href}>
@@ -54,29 +56,31 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h5>Contact</h5>
+            <h2>Contact</h2>
             <ul>
               <li>
                 <a href="mailto:Info@corefluxsolutions.com">Info@corefluxsolutions.com</a>
               </li>
               <li>Houston, TX</li>
               <li>Working with teams everywhere</li>
-              <li>
-                <a href="#" aria-label="LinkedIn">
-                  LinkedIn ↗
-                </a>
-              </li>
-              <li>
-                <a href="#" aria-label="GitHub">
-                  GitHub ↗
-                </a>
-              </li>
+              {/* Social links render once their URLs are set in lib/site.ts */}
+              {SOCIAL_LINKS.filter((s) => s.href).map((s) => (
+                <li key={s.label}>
+                  <a href={s.href} target="_blank" rel="noopener noreferrer">
+                    {s.label} ↗
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
         <div className="foot-base">
           <div>© {new Date().getFullYear()} Coreflux Solutions. All rights reserved.</div>
-          <div>Built in-house · v1.0</div>
+          <nav aria-label="Legal" className="foot-legal">
+            <Link href="/privacy">Privacy policy</Link>
+            <Link href="/terms">Terms</Link>
+            <CookieSettingsButton />
+          </nav>
         </div>
       </div>
     </footer>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import SectionHead from "@/components/SectionHead";
@@ -6,53 +7,54 @@ import CapabilityGrid from "@/components/CapabilityGrid";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/home/CTA";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "ERP Solutions",
   description:
     "Custom ERP systems for inventory, HR, accounting, CRM, operations and reporting — built around how your team actually works.",
-};
+  path: "/services/erp",
+});
 
 const CAPABILITIES = [
   {
     icon: <span className="font-mono text-sm">IN</span>,
     title: "Inventory & warehousing",
     body:
-      "Real-time stock visibility across locations, with batch, serial and lot tracking, multi-UoM, automated reorder logic and pick-pack-ship workflows.",
+      "Real-time stock visibility across locations, with automated reorder logic.",
     bullets: ["Multi-warehouse", "Barcoding / labels", "Cycle counts", "Reorder rules"],
   },
   {
     icon: <span className="font-mono text-sm">HR</span>,
     title: "HR & payroll",
     body:
-      "Employee records, time-off, attendance and payroll-ready exports. Country-specific tax tables when you need them, simple flat structures when you don't.",
+      "Employee records, time-off, attendance and payroll-ready exports.",
     bullets: ["Employee directory", "Leave & attendance", "Payroll export", "Documents"],
   },
   {
     icon: <span className="font-mono text-sm">AC</span>,
     title: "Accounting workflows",
     body:
-      "Quotes, invoices, bills, payments, reconciliation and reporting that connects directly to operations — no double entry between systems.",
+      "Quotes, invoices, bills and payments connected directly to operations — no double entry.",
     bullets: ["Invoicing", "Bills / AP", "Bank reconciliation", "Tax reports"],
   },
   {
     icon: <span className="font-mono text-sm">CR</span>,
     title: "CRM & sales",
     body:
-      "Pipeline, contacts, deals, quotes and customer history — connected to invoicing, fulfilment and support so nothing falls between teams.",
+      "Pipeline, contacts, deals and customer history — connected to invoicing and fulfilment.",
     bullets: ["Pipeline", "Quotes → invoices", "Customer history", "Tasks"],
   },
   {
     icon: <span className="font-mono text-sm">DB</span>,
     title: "Operations dashboards",
     body:
-      "Role-based dashboards for owners, ops leads and floor staff. Numbers that update live, not stale weekly exports.",
+      "Role-based dashboards. Numbers that update live, not stale weekly exports.",
     bullets: ["Live KPIs", "Drill-down", "Custom reports", "Scheduled emails"],
   },
   {
     icon: <span className="font-mono text-sm">VM</span>,
     title: "Vendor management",
     body:
-      "Vendor records, purchase orders, GRNs, supplier scorecards and payment cycles. The other half of inventory, done properly.",
+      "Vendor records, purchase orders, supplier scorecards and payment cycles.",
     bullets: ["POs / GRNs", "Supplier scorecards", "Lead times", "Payment terms"],
   },
 ];
@@ -127,7 +129,7 @@ const DELIVERABLES = [
   { label: "Architecture map", body: "Full data model, integration points, environments and access roles." },
   { label: "Working software", body: "Weekly deployable releases against a fixed-scope blueprint." },
   { label: "Migration", body: "Historical data moved in clean, validated against your records." },
-  { label: "Training & docs", body: "Recorded walkthroughs and written docs your team will actually read." },
+  { label: "Training & docs", body: "Recorded walkthroughs and written docs." },
   { label: "Source & infra", body: "Repo, deployment pipeline and infrastructure handed over in your name." },
   { label: "Support track", body: "Optional retainer for changes, scaling and new modules post-launch." },
 ];
@@ -149,9 +151,8 @@ export default function ERPPage() {
         }
         lede={
           <>
-            Inventory, HR, accounting workflows, CRM, operations dashboards, vendor
-            management and reporting — built as one connected system, around how
-            your team already works. No per-seat licenses, no five-year roadmap.
+            Inventory, HR, accounting, CRM, dashboards and vendor management —
+            one connected system, built around how your team already works.
           </>
         }
         ctas={[
@@ -175,7 +176,7 @@ export default function ERPPage() {
             blurb={
               <>
                 Pick the modules that match your business today. Add the rest when you
-                need them — same data model, no re-platforming.
+                need them.
               </>
             }
           />
@@ -191,7 +192,6 @@ export default function ERPPage() {
             title={<>One data model. <em>Every</em> workflow.</>}
             blurb={
               <>
-                Most ERP failures come from systems built as bolted-together modules.
                 We start from your data — products, people, money — and build outward,
                 so every workflow reads from the same source of truth.
               </>
@@ -205,17 +205,17 @@ export default function ERPPage() {
             {[
               {
                 step: "Data layer",
-                desc: "Postgres + clean schema. Audited, versioned, indexed for the reports you'll actually run.",
+                desc: "Postgres + clean schema, indexed for the reports you'll actually run.",
                 tag: "Layer 01",
               },
               {
                 step: "Workflow layer",
-                desc: "TypeScript services for inventory moves, invoicing, payroll exports. Tested, observable, deterministic.",
+                desc: "TypeScript services for inventory moves, invoicing and payroll exports.",
                 tag: "Layer 02",
               },
               {
                 step: "Interface layer",
-                desc: "Role-aware dashboards for owners, ops, finance and floor staff. Mobile-friendly where it matters.",
+                desc: "Role-aware dashboards for owners, ops, finance and floor staff.",
                 tag: "Layer 03",
               },
             ].map((l, i, arr) => (
@@ -229,9 +229,9 @@ export default function ERPPage() {
                 <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-[color:var(--c1)]">
                   {l.tag}
                 </span>
-                <h4 className="mt-3 font-serif text-[26px] text-[color:var(--ink)]">
+                <h3 className="mt-3 font-serif text-[26px] text-[color:var(--ink)]">
                   {l.step}
-                </h4>
+                </h3>
                 <p className="mt-3 text-[14.5px] leading-relaxed text-[color:var(--ink-2)]">
                   {l.desc}
                 </p>
@@ -258,9 +258,9 @@ export default function ERPPage() {
                 <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-[color:var(--mute)]">
                   {String(i + 1).padStart(2, "0")} / {String(DELIVERABLES.length).padStart(2, "0")}
                 </div>
-                <h4 className="mt-3 font-serif text-[22px] text-[color:var(--ink)]">
+                <h3 className="mt-3 font-serif text-[22px] text-[color:var(--ink)]">
                   {d.label}
-                </h4>
+                </h3>
                 <p className="mt-2 text-[14px] leading-relaxed text-[color:var(--ink-2)]">
                   {d.body}
                 </p>

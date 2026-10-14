@@ -3,6 +3,16 @@ import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import RevealObserver from "@/components/RevealObserver";
+import JsonLd from "@/components/JsonLd";
+import Analytics from "@/components/Analytics";
+import {
+  SITE_URL,
+  SITE_NAME,
+  CONTACT_EMAIL,
+  DEFAULT_DESCRIPTION,
+  OG_IMAGE,
+  SOCIAL_LINKS,
+} from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -25,22 +35,43 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
+// Site-wide defaults. Pages override title / description / canonical / OG via
+// pageMetadata() in lib/site.ts.
 export const metadata: Metadata = {
-  metadataBase: new URL("https://corefluxsolutions.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Coreflux Solutions — Practical software for serious businesses",
-    template: "%s · Coreflux Solutions",
+    default: "Coreflux Solutions — Software for serious businesses",
+    template: `%s · ${SITE_NAME}`,
   },
-  description:
-    "Houston-based software studio. We build custom ERP, LMS, AI automation, data migration, web, app and gaming solutions — without enterprise-level complexity.",
+  description: DEFAULT_DESCRIPTION,
   openGraph: {
-    title: "Coreflux Solutions — Practical software for serious businesses",
-    description:
-      "Custom ERP, LMS, AI automation, data migration, web, app and gaming solutions.",
     type: "website",
     locale: "en_US",
-    siteName: "Coreflux Solutions",
+    siteName: SITE_NAME,
+    images: [OG_IMAGE],
   },
+  twitter: { card: "summary_large_image", images: [OG_IMAGE.url] },
+};
+
+const ORGANIZATION = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${SITE_URL}/#organization`,
+  name: SITE_NAME,
+  url: SITE_URL,
+  logo: `${SITE_URL}/icon-512.png`,
+  image: `${SITE_URL}${OG_IMAGE.url}`,
+  description: DEFAULT_DESCRIPTION,
+  email: CONTACT_EMAIL,
+  foundingDate: "2025",
+  // TODO(owner): add streetAddress / postalCode if you want a full address shown.
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Houston",
+    addressRegion: "TX",
+    addressCountry: "US",
+  },
+  sameAs: SOCIAL_LINKS.filter((s) => s.href).map((s) => s.href),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -50,10 +81,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
     >
       <body>
+        <JsonLd data={ORGANIZATION} />
+        <a href="#main" className="skip-link">
+          Skip to content
+        </a>
         <RevealObserver />
         <Nav />
-        {children}
+        <main id="main" tabIndex={-1} className="outline-none">
+          {children}
+        </main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );

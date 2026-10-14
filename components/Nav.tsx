@@ -3,19 +3,34 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { SERVICES, STUDIO, type NavItem } from "./nav-data";
+import TextRoll from "./skiper/TextRoll";
 
 export default function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState<null | "services" | "studio">(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const headerRef = useRef<HTMLElement | null>(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Progressive blur behind the nav only once content scrolls underneath it.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Close on outside click / Escape
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") {
+        // If focus is inside an open panel, hand it back to that panel's button.
+        const trigger = (document.activeElement as HTMLElement | null)
+          ?.closest(".has-mega")
+          ?.querySelector<HTMLButtonElement>(".mega-trigger");
         setOpenMenu(null);
         setMobileOpen(false);
+        trigger?.focus();
       }
     }
     function onClick(e: MouseEvent) {
@@ -39,124 +54,147 @@ export default function Nav() {
     if (closeTimer.current) clearTimeout(closeTimer.current);
     closeTimer.current = setTimeout(() => setOpenMenu(null), 140);
   };
+  // Keyboard users tabbing out of a dropdown should close it.
+  const blurClose = (e: React.FocusEvent<HTMLDivElement>) => {
+    if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOpenMenu(null);
+  };
 
   return (
-    <header className="nav" ref={headerRef}>
-      <div className="nav-inner">
-        <Link href="/" className="logo" onClick={() => setOpenMenu(null)}>
-          Coreflux Solutions<span className="dot" />
-        </Link>
+    <>
+      <div className="nav-blur" data-on={scrolled} aria-hidden />
+      <header className="nav" ref={headerRef}>
+        <div className="nav-inner">
+          <Link href="/" className="logo" onClick={() => setOpenMenu(null)}>
+            Coreflux Solutions<span className="dot" />
+          </Link>
 
-        <nav className="links" aria-label="Primary">
-          {/* Services mega-dropdown */}
-          <div
-            className="has-mega"
-            onMouseEnter={() => hoverOpen("services")}
-            onMouseLeave={hoverClose}
-          >
-            <button
-              className="mega-trigger"
-              data-open={openMenu === "services"}
-              aria-expanded={openMenu === "services"}
-              aria-haspopup="true"
-              onClick={() =>
-                setOpenMenu((m) => (m === "services" ? null : "services"))
-              }
+          <nav className="links" aria-label="Primary">
+            {/* Services mega-dropdown */}
+            <div
+              className="has-mega"
+              onMouseEnter={() => hoverOpen("services")}
+              onMouseLeave={hoverClose}
+              onBlur={blurClose}
             >
-              Services <span className="caret">▾</span>
-            </button>
-            <MegaPanel
-              open={openMenu === "services"}
-              items={SERVICES}
-              footHref="/#services"
-              footLabel="All six service lines"
-              onNavigate={() => setOpenMenu(null)}
-            />
-          </div>
+              <button
+                className="mega-trigger"
+                data-open={openMenu === "services"}
+                aria-expanded={openMenu === "services"}
+                aria-controls="mega-services"
+                onClick={() =>
+                  setOpenMenu((m) => (m === "services" ? null : "services"))
+                }
+              >
+                <TextRoll>Services</TextRoll> <span className="caret">▾</span>
+              </button>
+              <MegaPanel
+                id="mega-services"
+                open={openMenu === "services"}
+                items={SERVICES}
+                footHref="/#services"
+                footLabel="All six service lines"
+                onNavigate={() => setOpenMenu(null)}
+              />
+            </div>
 
-          {/* Studio mega-dropdown */}
-          <div
-            className="has-mega"
-            onMouseEnter={() => hoverOpen("studio")}
-            onMouseLeave={hoverClose}
-          >
-            <button
-              className="mega-trigger"
-              data-open={openMenu === "studio"}
-              aria-expanded={openMenu === "studio"}
-              aria-haspopup="true"
-              onClick={() =>
-                setOpenMenu((m) => (m === "studio" ? null : "studio"))
-              }
+            {/* Studio mega-dropdown */}
+            <div
+              className="has-mega"
+              onMouseEnter={() => hoverOpen("studio")}
+              onMouseLeave={hoverClose}
+              onBlur={blurClose}
             >
-              Studio <span className="caret">▾</span>
-            </button>
-            <MegaPanel
-              open={openMenu === "studio"}
-              items={STUDIO}
-              footHref="/case-studies"
-              footLabel="See selected work"
-              onNavigate={() => setOpenMenu(null)}
-            />
-          </div>
+              <button
+                className="mega-trigger"
+                data-open={openMenu === "studio"}
+                aria-expanded={openMenu === "studio"}
+                aria-controls="mega-studio"
+                onClick={() =>
+                  setOpenMenu((m) => (m === "studio" ? null : "studio"))
+                }
+              >
+                <TextRoll>Studio</TextRoll> <span className="caret">▾</span>
+              </button>
+              <MegaPanel
+                id="mega-studio"
+                open={openMenu === "studio"}
+                items={STUDIO}
+                footHref="/case-studies"
+                footLabel="See selected work"
+                onNavigate={() => setOpenMenu(null)}
+              />
+            </div>
 
-          <Link href="/case-studies">Work</Link>
-          <Link href="/#contact">Contact</Link>
-        </nav>
+            <Link href="/case-studies">
+              <TextRoll>Work</TextRoll>
+            </Link>
+            <Link href="/#contact">
+              <TextRoll>Contact</TextRoll>
+            </Link>
+          </nav>
 
-        <span className="spacer" />
+          <span className="spacer" />
 
-        <button
-          aria-label="Toggle menu"
-          aria-expanded={mobileOpen}
-          className="md:hidden btn ghost"
-          onClick={() => setMobileOpen((s) => !s)}
-        >
-          {mobileOpen ? "Close" : "Menu"}
-        </button>
-
-        <Link className="btn primary" href="/#contact">
-          Let&rsquo;s talk
-          <span className="arrow">↗</span>
-        </Link>
-      </div>
-
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <div
-          className="md:hidden mt-3 rounded-3xl border bg-white/90 backdrop-blur p-5 max-h-[70vh] overflow-y-auto"
-          style={{ borderColor: "var(--line)" }}
-        >
-          <MobileGroup
-            title="Services"
-            items={SERVICES}
-            onNavigate={() => setMobileOpen(false)}
-          />
-          <MobileGroup
-            title="Studio"
-            items={STUDIO}
-            onNavigate={() => setMobileOpen(false)}
-          />
-          <Link
-            href="/#contact"
-            onClick={() => setMobileOpen(false)}
-            className="mt-4 btn primary w-full justify-center"
+          <button
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
+            className="nav-toggle btn ghost"
+            onClick={() => setMobileOpen((s) => !s)}
           >
-            Let&rsquo;s talk <span className="arrow">↗</span>
+            <span className="menu-icon" data-open={mobileOpen} aria-hidden>
+              <span />
+              <span />
+              <span />
+            </span>
+          </button>
+
+          <Link className="nav-cta btn primary" href="/#contact">
+            Let&rsquo;s talk
+            <span className="arrow">↗</span>
           </Link>
         </div>
-      )}
-    </header>
+
+        {/* Mobile menu */}
+        {mobileOpen && (
+          <div
+            id="mobile-menu"
+            className="nav-mobile mt-3 rounded-3xl border bg-white/90 backdrop-blur p-5 max-h-[70vh] overflow-y-auto"
+            style={{ borderColor: "var(--line)" }}
+          >
+            <MobileGroup
+              title="Services"
+              items={SERVICES}
+              onNavigate={() => setMobileOpen(false)}
+            />
+            <MobileGroup
+              title="Studio"
+              items={STUDIO}
+              onNavigate={() => setMobileOpen(false)}
+            />
+            <Link
+              href="/#contact"
+              onClick={() => setMobileOpen(false)}
+              className="mt-4 btn primary w-full justify-center"
+            >
+              Let&rsquo;s talk <span className="arrow">↗</span>
+            </Link>
+          </div>
+        )}
+      </header>
+    </>
   );
 }
 
 function MegaPanel({
+  id,
   open,
   items,
   footHref,
   footLabel,
   onNavigate,
 }: {
+  id: string;
   open: boolean;
   items: NavItem[];
   footHref: string;
@@ -164,14 +202,13 @@ function MegaPanel({
   onNavigate: () => void;
 }) {
   return (
-    <div className={`mega-panel ${open ? "open" : ""}`} role="menu">
+    <div id={id} className={`mega-panel ${open ? "open" : ""}`}>
       <div className="mega-grid">
         {items.map((it) => (
           <Link
             key={it.href}
             href={it.href}
             className="mega-item"
-            role="menuitem"
             onClick={onNavigate}
             tabIndex={open ? 0 : -1}
           >

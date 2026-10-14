@@ -36,7 +36,7 @@ export default function Pitch() {
                   style={{ transitionDelay: `${i * 60}ms` }}
                 >
                   <span className="pitch-card-ic">{c.k}</span>
-                  <h4 className="pitch-card-t">{c.t}</h4>
+                  <h3 className="pitch-card-t">{c.t}</h3>
                   <p className="pitch-card-b">{c.b}</p>
                 </article>
               ))}

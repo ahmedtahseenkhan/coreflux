@@ -5,11 +5,16 @@ import { useEffect, useRef } from "react";
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      // Hold the background video on its first frame for reduced-motion users.
+      videoRef.current?.pause();
+      return;
+    }
 
     const onMove = (e: MouseEvent) => {
       const r = el.getBoundingClientRect();
@@ -27,12 +32,16 @@ export default function Hero() {
       {/* Video background */}
       <div className="hero-v2-bg" aria-hidden>
         <video
+          ref={videoRef}
           className="hero-v2-video"
           autoPlay
           muted
           loop
           playsInline
+          poster="/hero-poster.webp"
         >
+          {/* 720p (~0.6 MB) for phones, 1080p (~1.4 MB) otherwise */}
+          <source src="/hero-bg-720.mp4" type="video/mp4" media="(max-width: 768px)" />
           <source src="/hero-bg.mp4" type="video/mp4" />
         </video>
         <div className="hero-v2-veil" />

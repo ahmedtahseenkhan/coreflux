@@ -22,14 +22,7 @@ export default function PageHero({
   meta,
 }: PageHeroProps) {
   return (
-    <section className="hero" style={{ paddingTop: 60, paddingBottom: 70 }}>
-      <div className="dots" />
-      <div className="blob-field" aria-hidden>
-        <span className="blob b1" />
-        <span className="blob b2" />
-        <span className="blob b3" />
-      </div>
-
+    <section className="hero" style={{ paddingTop: 128, paddingBottom: 70 }}>
       <div className="wrap hero-inner">
         {crumbs && (
           <nav

@@ -40,9 +40,9 @@ export default function Process() {
               <div className="text-[13px] font-mono uppercase tracking-[0.12em] text-[#7C3AED]">
                 {s.n}
               </div>
-              <h4 className="mt-5 font-serif text-[24px] leading-tight text-[color:var(--ink)] group-hover:text-[#7C3AED] transition-colors">
+              <h3 className="mt-5 font-serif text-[24px] leading-tight text-[color:var(--ink)] group-hover:text-[#7C3AED] transition-colors">
                 {s.t}
-              </h4>
+              </h3>
               <p className="mt-3 text-[14px] leading-relaxed text-[color:var(--ink-2)]">
                 {s.b}
               </p>

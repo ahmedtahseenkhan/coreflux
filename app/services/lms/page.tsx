@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import SectionHead from "@/components/SectionHead";
@@ -6,53 +7,54 @@ import CapabilityGrid from "@/components/CapabilityGrid";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/home/CTA";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "LMS Solutions",
   description:
     "Custom training portals, employee learning systems, compliance training, course platforms and progress dashboards.",
-};
+  path: "/services/lms",
+});
 
 const CAPABILITIES = [
   {
     icon: <span className="font-mono text-sm">TP</span>,
     title: "Training portals",
     body:
-      "Branded portals for internal teams, contractors or customers. SSO, per-role tracks, certificates that don't look like clipart.",
+      "Branded portals for internal teams, contractors or customers.",
     bullets: ["SSO / SAML", "Per-role tracks", "Branded certificates", "Bulk enrolment"],
   },
   {
     icon: <span className="font-mono text-sm">CP</span>,
     title: "Compliance & certification",
     body:
-      "Expiry tracking, auto-reminders, audit-ready exports. Built so an inspector can see proof in two clicks.",
+      "Expiry tracking, auto-reminders and audit-ready exports.",
     bullets: ["Expiry alerts", "Audit exports", "Manager approvals", "Re-cert flows"],
   },
   {
     icon: <span className="font-mono text-sm">CS</span>,
     title: "Course platforms",
     body:
-      "Multi-instructor publishing, drip releases, assignments and grading. Stripe-backed if you're selling externally.",
+      "Multi-instructor publishing, drip releases, assignments and grading.",
     bullets: ["Multi-instructor", "Drip cohorts", "Stripe payments", "Discussion threads"],
   },
   {
     icon: <span className="font-mono text-sm">DA</span>,
     title: "Progress dashboards",
     body:
-      "Managers see what their team has and hasn't done. Learners see what's next, not 47 menu items.",
+      "Managers see what their team has and hasn't done.",
     bullets: ["Live KPIs", "Team rollups", "Risk flags", "Scheduled reports"],
   },
   {
     icon: <span className="font-mono text-sm">MB</span>,
     title: "Mobile-first delivery",
     body:
-      "Most workforces don't live at a desk. Short, mobile sessions beat a 60-slide LMS deck every time.",
+      "Short, mobile sessions beat a 60-slide LMS deck every time.",
     bullets: ["PWA / native", "Offline sessions", "5-min lessons", "Push reminders"],
   },
   {
     icon: <span className="font-mono text-sm">IX</span>,
     title: "Integrations",
     body:
-      "Wire into your HR system, payroll, or ERP so onboarding auto-enrols training and offboarding revokes access.",
+      "Wire into HR, payroll or ERP so onboarding auto-enrols training.",
     bullets: ["HRIS / payroll", "ERP hooks", "SSO providers", "Webhooks"],
   },
 ];
@@ -169,9 +171,9 @@ export default function LMSPage() {
         title={<>Learning systems that <em>actually</em> get completed.</>}
         lede={
           <>
-            Training portals, employee learning systems, compliance training,
-            course platforms and progress dashboards. Built mobile-first for
-            the 80% of staff who don&rsquo;t live in a browser tab.
+            Training portals, compliance training and course platforms &mdash;
+            built mobile-first for the 80% of staff who don&rsquo;t live in a
+            browser tab.
           </>
         }
         ctas={[
@@ -194,9 +196,7 @@ export default function LMSPage() {
             title={<>One platform. <em>Many</em> tracks.</>}
             blurb={
               <>
-                Each learner sees only what matters for their role &mdash; with
-                clear next steps, real progress, and certifications that
-                won&rsquo;t expire silently in the background.
+                Each learner sees only what matters for their role.
               </>
             }
           />
@@ -279,8 +279,6 @@ export default function LMSPage() {
 
           <p className="reveal mt-6 text-[13px] text-[color:var(--mute)] max-w-[64ch]">
             Tracks are configured per role, location or any custom segment.
-            Re-certification windows and expiry alerts run on their own
-            schedule.
           </p>
         </div>
       </section>
@@ -311,17 +309,17 @@ export default function LMSPage() {
               {
                 k: "Audit-ready",
                 v: "Inspector-grade exports",
-                d: "Your auditor's exact format, not a generic CSV. We've passed real audits.",
+                d: "Your auditor's exact format, not a generic CSV.",
               },
               {
                 k: "Mobile completion",
                 v: "Up to 3.2× higher",
-                d: "Short, native-feeling sessions for off-desk staff beat desktop LMS UX every time.",
+                d: "Short, native-feeling sessions for off-desk staff.",
               },
               {
                 k: "Integrated",
                 v: "HR · Payroll · ERP",
-                d: "Onboarding kicks off training automatically. Offboarding revokes access cleanly.",
+                d: "Onboarding kicks off training automatically.",
               },
             ].map((o, i, arr) => (
               <div
@@ -354,9 +352,8 @@ export default function LMSPage() {
           >
             <p className="text-[15px] leading-relaxed text-[color:var(--ink-2)]">
               <strong className="text-[color:var(--ink)]">Already on an LMS that almost works?</strong>{" "}
-              We also do focused integrations &mdash; mobile front-ends,
-              auto-enrolment from HR, audit export pipelines &mdash; without
-              ripping out what you have.{" "}
+              We also do focused integrations without ripping out what you
+              have.{" "}
               <Link
                 href="/#contact"
                 className="text-[color:var(--ink)] underline decoration-[color:var(--c1)] underline-offset-4"

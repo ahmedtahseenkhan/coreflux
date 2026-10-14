@@ -21,34 +21,36 @@ export default function CapabilityGrid({
       {items.map((it, i) => (
         <article
           key={it.title}
-          className="reveal rounded-3xl border bg-[color:var(--card)] p-7 shadow-sm transition hover:shadow-md"
+          className="reveal group rounded-3xl border bg-[color:var(--card)] p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
           style={{ borderColor: "var(--line)", transitionDelay: `${i * 50}ms` }}
         >
-          {it.icon && (
-            <div
-              className="mb-5 flex h-11 w-11 items-center justify-center rounded-2xl text-white"
-              style={{ background: "var(--ink)" }}
-            >
-              {it.icon}
-            </div>
-          )}
-          <h3 className="font-serif text-[24px] leading-snug text-[color:var(--ink)]">
-            {it.title}
-          </h3>
-          <p className="mt-3 text-[14.5px] leading-relaxed text-[color:var(--ink-2)]">
+          <div className="flex items-center gap-4">
+            {it.icon && (
+              <div
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-white transition group-hover:scale-105"
+                style={{ background: "linear-gradient(135deg, var(--c4), var(--c1))" }}
+              >
+                {it.icon}
+              </div>
+            )}
+            <h3 className="font-serif text-[24px] leading-tight text-[color:var(--ink)]">
+              {it.title}
+            </h3>
+          </div>
+          <p className="mt-4 text-[15px] leading-relaxed text-[color:var(--ink-2)]">
             {it.body}
           </p>
           {it.bullets && (
-            <ul className="mt-5 space-y-2">
+            <ul className="mt-5 flex flex-wrap gap-1.5">
               {it.bullets.map((b) => (
                 <li
                   key={b}
-                  className="flex items-start gap-2 text-[13.5px] text-[color:var(--ink-2)]"
+                  className="rounded-full border px-2.5 py-1 font-mono text-[11.5px] text-[color:var(--ink-2)]"
+                  style={{
+                    borderColor: "var(--line)",
+                    background: "color-mix(in oklab, var(--c1) 5%, var(--bg))",
+                  }}
                 >
-                  <span
-                    className="mt-1.5 h-1 w-1 shrink-0 rounded-full"
-                    style={{ background: "var(--c1)" }}
-                  />
                   {b}
                 </li>
               ))}

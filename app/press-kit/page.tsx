@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import SectionHead from "@/components/SectionHead";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Press kit",
   description: "Coreflux Solutions brand assets, boilerplate and press contact.",
-};
+  path: "/press-kit",
+});
 
 const FACTS = [
   { label: "Studio", value: "Coreflux Solutions" },
@@ -17,11 +19,14 @@ const FACTS = [
   { label: "Engagement", value: "Fixed-scope, client-owned" },
 ];
 
-const ASSETS = [
-  { name: "Wordmark · Light", note: "SVG · 8KB · For light backgrounds", file: "/press/corefluxsolutions-wordmark-light.svg" },
-  { name: "Wordmark · Dark", note: "SVG · 8KB · For dark backgrounds", file: "/press/corefluxsolutions-wordmark-dark.svg" },
-  { name: "Brand colour", note: "Primary purple — #7C3AED", file: "#" },
-  { name: "Press one-pager", note: "PDF · Boilerplate + facts · ~80KB", file: "/press/corefluxsolutions-press.pdf" },
+// TODO(owner): add the real files to public/press/ and set `file` on each entry
+// (e.g. file: "/press/corefluxsolutions-wordmark-light.svg"). Until a file is
+// set, the button emails press@ to request it instead of linking to a 404.
+const ASSETS: { name: string; note: string; file?: string; swatch?: string }[] = [
+  { name: "Wordmark · Light", note: "SVG · 8KB · For light backgrounds" },
+  { name: "Wordmark · Dark", note: "SVG · 8KB · For dark backgrounds" },
+  { name: "Brand colour", note: "Primary purple — #7C3AED", swatch: "#7C3AED" },
+  { name: "Press one-pager", note: "PDF · Boilerplate + facts · ~80KB" },
 ];
 
 export default function PressKitPage() {
@@ -145,17 +150,31 @@ export default function PressKitPage() {
                 style={{ transitionDelay: `${i * 50}ms` }}
               >
                 <div>
-                  <h4 className="font-serif text-[22px] leading-snug text-[color:var(--ink)]">
+                  <h3 className="font-serif text-[22px] leading-snug text-[color:var(--ink)]">
                     {a.name}
-                  </h4>
+                  </h3>
                   <p className="mt-1 text-[13px] text-[color:var(--mute)]">
                     {a.note}
                   </p>
                 </div>
-                <a href={a.file} className="btn ghost self-start md:self-auto">
-                  Download
-                  <span className="arrow">↗</span>
-                </a>
+                {a.swatch ? (
+                  <span
+                    className="h-11 w-11 shrink-0 self-start rounded-xl border md:self-auto"
+                    style={{ background: a.swatch, borderColor: "var(--line)" }}
+                    aria-hidden
+                  />
+                ) : (
+                  <a
+                    href={
+                      a.file ??
+                      `mailto:press@corefluxsolutions.com?subject=${encodeURIComponent(`Press kit: ${a.name}`)}`
+                    }
+                    className="btn ghost self-start md:self-auto"
+                  >
+                    {a.file ? "Download" : "Request"}
+                    <span className="arrow">↗</span>
+                  </a>
+                )}
               </li>
             ))}
           </ul>
